@@ -6,4 +6,9 @@
         android:icon="@drawable/line_chart"
         android:title="charts"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_connect"
+        android:icon="@drawable/add_icon"
+        android:title="connect"
+        app:showAsAction="ifRoom"/>
 </menu>
