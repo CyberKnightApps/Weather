@@ -8,18 +8,26 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.GridView;
 
+import com.cyberknight.weather.bluetooth_connectivity.BluetoothChat;
+import com.github.mikephil.charting.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
 
     GridView gridView;
+    private boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        String check = null;
+        Intent i = getIntent();
+        check = i.getStringExtra("Check");
+        if (check != null)
+            flag = true;
         ArrayList<OverviewValues> list = new ArrayList<>();
         list.add(new OverviewValues("Temperature",44.5,37.3,47.4));
         list.add(new OverviewValues("Pressure",115.2,110.1,123.1));
@@ -43,6 +51,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
@@ -50,7 +66,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, LineChartActivity.class);
                 startActivity(i);
                 return true;
-
+            case R.id.action_connect:
+                if (!flag)
+                    startActivity(new Intent(MainActivity.this, BluetoothChat.class));
+                else {
+                    super.onBackPressed();
+                }
+                finish();
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
