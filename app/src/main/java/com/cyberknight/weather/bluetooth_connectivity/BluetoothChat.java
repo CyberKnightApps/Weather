@@ -24,8 +24,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cyberknight.weather.Database.BtpRecord;
 import com.cyberknight.weather.MainActivity;
 import com.cyberknight.weather.R;
+import com.cyberknight.weather.RecordCollector;
 import com.cyberknight.weather.bluetooth_connectivity.MessageAdapter;
 
 
@@ -37,6 +39,7 @@ public class BluetoothChat extends Activity {
     public static final int MESSAGE_WRITE = 3;
     public static final int MESSAGE_DEVICE_NAME = 4;
     public static final int MESSAGE_TOAST = 5;
+    private String to_store = "";
 
 
     // Key names received from the BluetoothChatService Handler
@@ -211,10 +214,32 @@ public class BluetoothChat extends Activity {
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    mAdapter.notifyDataSetChanged();
-                    linearLayoutManager.scrollToPosition(mAdapter.getItemCount());
-                    Log.e("Message read","*****************"+readMessage);
-                    messageList.add(new com.cyberknight.weather.bluetooth_connectivity.Message(counter++, readMessage, mConnectedDeviceName));
+
+                    if(to_store.split("  ").length>8){
+                        to_store="";
+                        break;
+                    }
+
+                    if (to_store.length()!=0){
+                        to_store = to_store+readMessage;
+                    }
+                    else{
+                        to_store = readMessage;
+                    }
+
+                    Log.e("Message read","*****************"+to_store);
+                    if ((to_store.split("  ").length==8&&(to_store.split("  "))[7].trim().length()==5)){
+                        //*********************************************
+                        BtpRecord tempRec = new BtpRecord(to_store);
+                        RecordCollector.addRecord(tempRec);
+                        mAdapter.notifyDataSetChanged();
+                        linearLayoutManager.scrollToPosition(mAdapter.getItemCount());
+                        messageList.add(new com.cyberknight.weather.bluetooth_connectivity.Message(counter++, to_store, mConnectedDeviceName));
+
+                        Toast.makeText(getApplicationContext(),to_store,Toast.LENGTH_SHORT).show();
+                        to_store = "";
+                    }
+
                     break;
                 case MESSAGE_DEVICE_NAME:
                     // save the connected device's name
