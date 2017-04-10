@@ -38,10 +38,13 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ChartsView
 
     private Context mContext;
     private ArrayList<Charts> dataList;
+    private int upperLimit[]={500,500,300,10200,40100,90100,10200,10200};
+    private int lowerLimit[]={0,0,0,1000,28000,78000,8000,8000};
 
     public ChartsAdapter(Context mContext, ArrayList<Charts> dataList) {
         this.mContext = mContext;
         this.dataList = dataList;
+
     }
 
     @Override
@@ -58,6 +61,10 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ChartsView
     @Override
     public void onBindViewHolder(ChartsViewHolder holder, int position) {
 
+        holder.pos=position;
+        YAxis leftAxis = holder.mChart.getAxisLeft();
+        leftAxis.setAxisMaximum(upperLimit[position]+10);
+        leftAxis.setAxisMinimum(lowerLimit[position]-10);
         holder.txtTitle1.setText(dataList.get(position).getTitle1());
         holder.txtTitle2.setText(dataList.get(position).getTitle2());
 
@@ -112,7 +119,7 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ChartsView
 
             if (Utils.getSDKInt() >= 18) {
                 // fill drawable only supported on api level 18 and above
-                Drawable drawable = ContextCompat.getDrawable(mContext, R.drawable.fade_red);
+                Drawable drawable = ContextCompat.getDrawable(mContext, R.color.green_400);
                 set1.setFillDrawable(drawable);
             }
             else {
@@ -145,6 +152,7 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ChartsView
 
         TextView txtTitle1,txtTitle2;
         LineChart mChart;
+        int pos;
 
         public ChartsViewHolder(View itemView) {
             super(itemView);
@@ -181,14 +189,15 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ChartsView
 
             Typeface tf = Typeface.createFromAsset(mContext.getAssets(), "OpenSans-Regular.ttf");
 
-            LimitLine ll1 = new LimitLine(100f, "Upper Limit");
+
+            LimitLine ll1 = new LimitLine(upperLimit[pos], "Upper Limit");
             ll1.setLineWidth(4f);
             ll1.enableDashedLine(10f, 10f, 0f);
             ll1.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
             ll1.setTextSize(10f);
             ll1.setTypeface(tf);
 
-            LimitLine ll2 = new LimitLine(-30f, "Lower Limit");
+            LimitLine ll2 = new LimitLine(lowerLimit[pos], "Lower Limit");
             ll2.setLineWidth(4f);
             ll2.enableDashedLine(10f, 10f, 0f);
             ll2.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
@@ -199,8 +208,8 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ChartsView
             leftAxis.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
             leftAxis.addLimitLine(ll1);
             leftAxis.addLimitLine(ll2);
-            leftAxis.setAxisMaximum(100f);
-            leftAxis.setAxisMinimum(-50f);
+            leftAxis.setAxisMaximum(upperLimit[pos]+10);
+            leftAxis.setAxisMinimum(lowerLimit[pos]-10);
             //leftAxis.setYOffset(20f);
             leftAxis.enableGridDashedLine(10f, 10f, 0f);
             leftAxis.setDrawZeroLine(false);
