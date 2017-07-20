@@ -1,5 +1,7 @@
 package com.cyberknight.weather;
 
+import android.app.AlarmManager;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     GridView gridView;
     private boolean flag = false;
+    AlarmManager periodicUpdate = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         gridView = (GridView) findViewById(R.id.activity_main_grid_view);
         GridViewCardAdapter adapter = new GridViewCardAdapter(this, list);
         gridView.setAdapter(adapter);
+
+
     }
 
     @Override

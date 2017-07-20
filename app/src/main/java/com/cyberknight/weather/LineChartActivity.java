@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import com.cyberknight.weather.Database.BtpRecord;
+import com.cyberknight.weather.database.BtpRecord;
 
 import java.util.ArrayList;
 

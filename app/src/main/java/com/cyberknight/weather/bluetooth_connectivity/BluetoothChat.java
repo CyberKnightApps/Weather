@@ -24,11 +24,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cyberknight.weather.Database.BtpRecord;
+import com.cyberknight.weather.database.BtpRecord;
 import com.cyberknight.weather.MainActivity;
 import com.cyberknight.weather.R;
 import com.cyberknight.weather.RecordCollector;
-import com.cyberknight.weather.bluetooth_connectivity.MessageAdapter;
 
 
 public class BluetoothChat extends Activity {

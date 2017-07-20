@@ -1,6 +1,4 @@
-package com.cyberknight.weather.Database;
-
-import java.sql.Time;
+package com.cyberknight.weather.database;
 
 /**
  * Created by Parth on 04-03-2017.

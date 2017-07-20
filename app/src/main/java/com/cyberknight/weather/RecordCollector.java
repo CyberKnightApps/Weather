@@ -1,6 +1,6 @@
 package com.cyberknight.weather;
 
-import com.cyberknight.weather.Database.BtpRecord;
+import com.cyberknight.weather.database.BtpRecord;
 
 import java.util.ArrayList;
 
@@ -18,5 +18,9 @@ public class RecordCollector {
 
     public static ArrayList<BtpRecord> getBtpRecords(){
         return btpRecords;
+    }
+
+    public static void emptyList(){
+        btpRecords = new ArrayList<>();
     }
 }

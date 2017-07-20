@@ -1,4 +1,4 @@
-package com.cyberknight.weather.Database;
+package com.cyberknight.weather.database;
 
 import android.provider.BaseColumns;
 
