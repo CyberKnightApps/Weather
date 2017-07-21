@@ -16,7 +16,12 @@ public final class BtpContract {
                     + BtpEntry.COLUMN_TIME + " VARCHAR (30) ,"
                     + BtpEntry.COLUMN_TEMPERATURE + " REAL , "
                     + BtpEntry.COLUMN_PRESSURE + " REAL , "
-                    + BtpEntry.COLUMN_HUMIDITY + " REAL "
+                    + BtpEntry.COLUMN_HUMIDITY + " REAL, "
+                    + BtpEntry.COLUMN_LIGHT + " REAL, "
+                    + BtpEntry.COLUMN_NO2 + " REAL, "
+                    + BtpEntry.COLUMN_NH3 + " REAL, "
+                    + BtpEntry.COLUMN_CO2 + " REAL, "
+                    + BtpEntry.COLUMN_VOC + " REAL "
                     + ")";
 
     static final String SQL_DELETE_BTP_TABLE = "DROP TABLE IF EXISTS " + BtpEntry.TABLE_NAME;
@@ -29,5 +34,10 @@ public final class BtpContract {
         public static final String COLUMN_TEMPERATURE = "Temperature";
         public static final String COLUMN_PRESSURE = "Pressure";
         public static final String COLUMN_HUMIDITY = "Humidity";
+        public static final String COLUMN_LIGHT = "Light";
+        public static final String COLUMN_NO2 = "NO2";
+        public static final String COLUMN_NH3 = "NH3";
+        public static final String COLUMN_CO2 = "CO2";
+        public static final String COLUMN_VOC = "VOC";
     }
 }

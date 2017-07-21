@@ -31,6 +31,8 @@ public class BtpRecord {
         VOC = s[7];
     }
 
+    public BtpRecord(){}
+
     public BtpRecord(long id, String time, String temperature, String pressure,
                      String humidity, String light, String NO2, String NH3, String CO2, String VOC) {
         this.id = id;

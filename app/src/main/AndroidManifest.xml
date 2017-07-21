@@ -25,6 +25,8 @@
         <activity android:name=".bluetooth_connectivity.DeviceListActivity"/>
         <service android:name=".database.PeriodicUpdater"
             android:exported="false"/>
+        <receiver android:name=".database.AlarmReceiver"
+            android:process=":remote"/>
     </application>
 
 </manifest>
