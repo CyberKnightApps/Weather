@@ -16,6 +16,7 @@ public class BtpRecord {
     private String NH3;
     private String CO2;
     private String VOC;
+    private String Date;
 
     public BtpRecord(String to_store){
         to_store = to_store.trim();
@@ -45,6 +46,14 @@ public class BtpRecord {
         this.NH3 = NH3;
         this.CO2 = CO2;
         this.VOC = VOC;
+    }
+
+    public String getDate() {
+        return Date;
+    }
+
+    public void setDate(String date) {
+        Date = date;
     }
 
     public long getId() {
