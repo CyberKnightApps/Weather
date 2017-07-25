@@ -1,6 +1,4 @@
-package com.cyberknight.weather.Database;
-
-import java.sql.Time;
+package com.cyberknight.weather.database;
 
 /**
  * Created by Parth on 04-03-2017.
@@ -32,6 +30,8 @@ public class BtpRecord {
         CO2 = s[6];
         VOC = s[7];
     }
+
+    public BtpRecord(){}
 
     public BtpRecord(long id, String time, String temperature, String pressure,
                      String humidity, String light, String NO2, String NH3, String CO2, String VOC) {
