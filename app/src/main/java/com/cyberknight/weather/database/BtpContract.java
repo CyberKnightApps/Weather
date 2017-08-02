@@ -21,7 +21,7 @@ public final class BtpContract {
                     + BtpEntry.COLUMN_NO2 + " REAL, "
                     + BtpEntry.COLUMN_NH3 + " REAL, "
                     + BtpEntry.COLUMN_CO2 + " REAL, "
-                    + BtpEntry.COLUMN_VOC + " REAL "
+                    + BtpEntry.COLUMN_VOC + " REAL, "
                     + BtpEntry.COLUMN_CO + " REAL "
                     + ")";
 

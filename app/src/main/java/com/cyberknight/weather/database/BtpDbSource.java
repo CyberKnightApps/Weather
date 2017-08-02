@@ -27,7 +27,7 @@ public class BtpDbSource {
             BtpContract.BtpEntry.COLUMN_NH3,
             BtpContract.BtpEntry.COLUMN_CO2,
             BtpContract.BtpEntry.COLUMN_VOC,
-            //BtpContract.BtpEntry.COLUMN_CO
+            BtpContract.BtpEntry.COLUMN_CO
     };
 
     public BtpDbSource(Context context){
@@ -54,7 +54,7 @@ public class BtpDbSource {
         values.put(BtpContract.BtpEntry.COLUMN_NH3, record.getNH3());
         values.put(BtpContract.BtpEntry.COLUMN_CO2, record.getCO2());
         values.put(BtpContract.BtpEntry.COLUMN_VOC, record.getVOC());
-        //values.put(BtpContract.BtpEntry.COLUMN_CO, record.getCO());
+        values.put(BtpContract.BtpEntry.COLUMN_CO, record.getCO());
 
         record.setId(database.insert(BtpContract.BtpEntry.TABLE_NAME, null, values));
         return record;
@@ -86,7 +86,7 @@ public class BtpDbSource {
         record.setNH3(cursor.getString(cursor.getColumnIndex(columns[7])));
         record.setCO2(cursor.getString(cursor.getColumnIndex(columns[8])));
         record.setVOC(cursor.getString(cursor.getColumnIndex(columns[9])));
-        //record.setCO(cursor.getString(cursor.getColumnIndex(columns[10])));
+        record.setCO(cursor.getString(cursor.getColumnIndex(columns[10])));
         return record;
     }
 }

@@ -36,7 +36,7 @@ public class BtpRecord {
     public BtpRecord(){}
 
     public BtpRecord(long id, String time, String temperature, String pressure,
-                     String humidity, String light, String NO2, String NH3, String CO2, String VOC) {
+                     String humidity, String light, String NO2, String NH3, String CO2, String VOC,String CO) {
         this.id = id;
         this.time = time;
         this.temperature = temperature;
@@ -47,6 +47,8 @@ public class BtpRecord {
         this.NH3 = NH3;
         this.CO2 = CO2;
         this.VOC = VOC;
+        this.CO = CO;
+
     }
 
     public String getDate() {
@@ -138,6 +140,7 @@ public class BtpRecord {
     }
 
     public String getCO(){ return CO;}
+
     public void setCO(String CO){ this.CO = CO; }
 
 }

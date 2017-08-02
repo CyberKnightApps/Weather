@@ -25,6 +25,8 @@ import android.widget.Toast;
 
 import com.cyberknight.weather.MainActivity;
 import com.cyberknight.weather.R;
+import com.cyberknight.weather.RecordCollector;
+import com.cyberknight.weather.database.BtpRecord;
 
 import me.aflak.bluetooth.Bluetooth;
 
@@ -139,9 +141,11 @@ public class Chat extends AppCompatActivity implements Bluetooth.CommunicationCa
     @Override
     public void onMessage(String message) {
         if(message.split(";").length==9){
-            Log.e("****Done****",message.split(";")[8]);
+            BtpRecord tempRec = new BtpRecord(message);
+            RecordCollector.addRecord(tempRec);
+            Display(name+": "+message);
         }
-        Display(name+": "+message+"Nirbhay:)");
+        Display("Nirbhay:)");
     }
 
     @Override

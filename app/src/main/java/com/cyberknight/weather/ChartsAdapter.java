@@ -40,11 +40,11 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ChartsView
     private Context mContext;
     private ArrayList<Charts> dataList;
     //Te Pr Hu Li NO2 CO2 NH3 VOC c,hPa,luxppa
-    //private int upperLimit[]={50,1100,100,1000,1000,2000,10,1000,10};
-    //private int lowerLimit[]={10,300,0,10,0,300,0,0,0};
-
-    private int upperLimit[]={50,1100,100,1000,10,2000,10,1000,10};
+    private int upperLimit[]={50,1100,100,1000,1000,2000,10,1000,10};
     private int lowerLimit[]={10,300,0,10,0,300,0,0,0};
+
+    //private int upperLimit[]={50,1100,100,1000,10,2000,10,1000,10};
+    //private int lowerLimit[]={10,300,0,10,0,300,0,0,0};
 
     public ChartsAdapter(Context mContext, ArrayList<Charts> dataList) {
         this.mContext = mContext;
@@ -86,8 +86,8 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ChartsView
         //Log.d("hh",position+" ");
         YAxis leftAxis = holder.mChart.getAxisLeft();
         leftAxis.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
-        leftAxis.setAxisMaximum(upperLimit[position]+10);
-        leftAxis.setAxisMinimum(lowerLimit[position]-10);
+        leftAxis.setAxisMaximum(upperLimit[position]);
+        leftAxis.setAxisMinimum(lowerLimit[position]);
         leftAxis.addLimitLine(ll1);
         leftAxis.addLimitLine(ll2);
         holder.txtTitle1.setText(dataList.get(position).getTitle1());
