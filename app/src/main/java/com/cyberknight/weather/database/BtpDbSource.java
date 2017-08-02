@@ -16,7 +16,8 @@ import java.util.ArrayList;
 public class BtpDbSource {
     private SQLiteDatabase database;
     private BtpDbHelper dbHelper;
-    private String columns[] = {BtpContract.BtpEntry._ID,
+    private String columns[] = {
+            BtpContract.BtpEntry._ID,
             BtpContract.BtpEntry.COLUMN_TIME,
             BtpContract.BtpEntry.COLUMN_TEMPERATURE,
             BtpContract.BtpEntry.COLUMN_PRESSURE,
@@ -25,7 +26,9 @@ public class BtpDbSource {
             BtpContract.BtpEntry.COLUMN_NO2,
             BtpContract.BtpEntry.COLUMN_NH3,
             BtpContract.BtpEntry.COLUMN_CO2,
-            BtpContract.BtpEntry.COLUMN_VOC};
+            BtpContract.BtpEntry.COLUMN_VOC,
+            //BtpContract.BtpEntry.COLUMN_CO
+    };
 
     public BtpDbSource(Context context){
         dbHelper = new BtpDbHelper(context);
@@ -51,6 +54,7 @@ public class BtpDbSource {
         values.put(BtpContract.BtpEntry.COLUMN_NH3, record.getNH3());
         values.put(BtpContract.BtpEntry.COLUMN_CO2, record.getCO2());
         values.put(BtpContract.BtpEntry.COLUMN_VOC, record.getVOC());
+        //values.put(BtpContract.BtpEntry.COLUMN_CO, record.getCO());
 
         record.setId(database.insert(BtpContract.BtpEntry.TABLE_NAME, null, values));
         return record;
@@ -60,7 +64,7 @@ public class BtpDbSource {
         ArrayList<BtpRecord> records = new ArrayList<>();
 
         Cursor cursor = database.query(BtpContract.BtpEntry.TABLE_NAME, columns, null, null, null, null, null);
-
+        //database.query()
         if(cursor.moveToFirst()){
             do{
                 records.add(cursorToRecord(cursor));
@@ -82,6 +86,7 @@ public class BtpDbSource {
         record.setNH3(cursor.getString(cursor.getColumnIndex(columns[7])));
         record.setCO2(cursor.getString(cursor.getColumnIndex(columns[8])));
         record.setVOC(cursor.getString(cursor.getColumnIndex(columns[9])));
+        //record.setCO(cursor.getString(cursor.getColumnIndex(columns[10])));
         return record;
     }
 }

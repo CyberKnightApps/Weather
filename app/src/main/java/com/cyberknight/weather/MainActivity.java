@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.GridView;
 
+import com.cyberknight.weather.Bluetooth.Select;
 import com.cyberknight.weather.bluetooth_connectivity.BluetoothChat;
 import com.cyberknight.weather.database.AlarmReceiver;
 import com.cyberknight.weather.database.BtpDbSource;
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.action_connect:
                 if (!flag)
-                    startActivity(new Intent(MainActivity.this, BluetoothChat.class));
+                    startActivity(new Intent(MainActivity.this, Select.class));
                 else {
                     super.onBackPressed();
                 }

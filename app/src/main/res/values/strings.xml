@@ -12,4 +12,5 @@
     <string name="none_found">None found</string>
     <string name="scanning">Scanning</string>
     <string name="none_paired">None paired</string>
+    <color name="bg">#C0C0C0</color>
 </resources>

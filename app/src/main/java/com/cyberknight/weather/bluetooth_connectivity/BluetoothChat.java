@@ -38,7 +38,7 @@ public class BluetoothChat extends Activity {
     public static final int MESSAGE_WRITE = 3;
     public static final int MESSAGE_DEVICE_NAME = 4;
     public static final int MESSAGE_TOAST = 5;
-    private String to_store = "";
+    private StringBuilder to_store = new StringBuilder();
 
 
     // Key names received from the BluetoothChatService Handler
@@ -213,32 +213,27 @@ public class BluetoothChat extends Activity {
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
+                    to_store.append(readMessage);
+                    Log.e("*****Message******",to_store.toString()+"");
+                    if(to_store.toString().split(":").length>=1){
+                        String s[] = to_store.toString().split(":");
+                        int length = s.length;
+                        Log.e("*****s[]****",s[length-1]+"");
+                        if(s[length-1].split(";").length==9){
+                            BtpRecord tempRec = new BtpRecord(s[length-1]);
+                            RecordCollector.addRecord(tempRec);
+                            mAdapter.notifyDataSetChanged();
+                            linearLayoutManager.scrollToPosition(mAdapter.getItemCount());
+                            messageList.add(new com.cyberknight.weather.bluetooth_connectivity.Message(counter++, to_store.toString(), mConnectedDeviceName));
 
-                    if(to_store.split("  ").length>8){
-                        to_store="";
-                        break;
+                            Toast.makeText(getApplicationContext(),to_store.toString(),Toast.LENGTH_SHORT).show();
+                            to_store = new StringBuilder();
+                        }
+                        else{
+                            to_store = new StringBuilder();
+                            to_store.append(s[length-1]);
+                        }
                     }
-
-                    if (to_store.length()!=0){
-                        to_store = to_store+readMessage;
-                    }
-                    else{
-                        to_store = readMessage;
-                    }
-
-                    Log.e("Message read","*****************"+to_store);
-                    if ((to_store.split("  ").length==8&&(to_store.split("  "))[7].trim().length()==5)){
-                        //*********************************************
-                        BtpRecord tempRec = new BtpRecord(to_store);
-                        RecordCollector.addRecord(tempRec);
-                        mAdapter.notifyDataSetChanged();
-                        linearLayoutManager.scrollToPosition(mAdapter.getItemCount());
-                        messageList.add(new com.cyberknight.weather.bluetooth_connectivity.Message(counter++, to_store, mConnectedDeviceName));
-
-                        Toast.makeText(getApplicationContext(),to_store,Toast.LENGTH_SHORT).show();
-                        to_store = "";
-                    }
-
                     break;
                 case MESSAGE_DEVICE_NAME:
                     // save the connected device's name

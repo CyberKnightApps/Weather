@@ -9,9 +9,9 @@ import java.util.ArrayList;
 public class Charts {
     private String title1;
     private String title2;
-    private ArrayList<Integer> bigDataList;
+    private ArrayList<Float> bigDataList;
 
-    public Charts(String title1, String title2, ArrayList<Integer> bigDataList) {
+    public Charts(String title1, String title2, ArrayList<Float> bigDataList) {
         this.title1 = title1;
         this.title2 = title2;
         this.bigDataList = bigDataList;
@@ -33,11 +33,11 @@ public class Charts {
         this.title2 = title2;
     }
 
-    public ArrayList<Integer> getBigDataList() {
+    public ArrayList<Float> getBigDataList() {
         return bigDataList;
     }
 
-    public void setBigDataList(ArrayList<Integer> bigDataList) {
+    public void setBigDataList(ArrayList<Float> bigDataList) {
         this.bigDataList = bigDataList;
     }
 }

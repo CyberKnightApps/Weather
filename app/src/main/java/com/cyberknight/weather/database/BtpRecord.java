@@ -17,19 +17,20 @@ public class BtpRecord {
     private String CO2;
     private String VOC;
     private String Date;
-
+    private String CO;
     public BtpRecord(String to_store){
         to_store = to_store.trim();
-        String s[] = to_store.split("  ");
+        String s[] = to_store.split(";");
         time = "0";
         temperature = s[0];
-        pressure = s[1];
-        humidity = s[2];
-        light = s[3];
-        NO2 = s[4];
-        NH3 = s[5];
-        CO2 = s[6];
-        VOC = s[7];
+        humidity = s[1];
+        light = s[2];
+        pressure = s[3];
+        CO2 = s[4];
+        VOC = s[5];
+        NH3 = s[6];
+        CO = s[7];
+        NO2 = s[8];
     }
 
     public BtpRecord(){}
@@ -135,4 +136,8 @@ public class BtpRecord {
     public void setVOC(String VOC) {
         this.VOC = VOC;
     }
+
+    public String getCO(){ return CO;}
+    public void setCO(String CO){ this.CO = CO; }
+
 }

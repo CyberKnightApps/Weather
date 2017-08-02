@@ -27,20 +27,17 @@ public class PeriodicUpdater extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        if(isNetworkAvailable()){
+       /* if(isNetworkAvailable()){
 
             BtpDbSource database = new BtpDbSource(context);
             ArrayList<BtpRecord> records = database.getAllRecords();
 
-            /*
-             *
-             * Upload records to firebase here....
-             *
-             */
+             //* Upload records to firebase here....
+
         }
         else{
             Log.e(SERVICE_NAME, "Internet not available");
-        }
+        }*/
     }
 
     @Override
