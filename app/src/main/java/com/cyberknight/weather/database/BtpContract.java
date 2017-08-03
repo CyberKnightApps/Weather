@@ -12,8 +12,8 @@ public final class BtpContract {
     static final String SQL_CREATE_BTP_TABLE =
             "CREATE TABLE IF NOT EXISTS " + BtpEntry.TABLE_NAME
                     + " ("
-                    + BtpEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
-                    + BtpEntry.COLUMN_TIME + " VARCHAR (30) ,"
+                    + BtpEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "
+                    + BtpEntry.COLUMN_TIME + " VARCHAR (30) , "
                     + BtpEntry.COLUMN_TEMPERATURE + " REAL , "
                     + BtpEntry.COLUMN_PRESSURE + " REAL , "
                     + BtpEntry.COLUMN_HUMIDITY + " REAL, "
@@ -41,7 +41,5 @@ public final class BtpContract {
         public static final String COLUMN_CO2 = "CO2";
         public static final String COLUMN_VOC = "VOC";
         public static final String COLUMN_CO = "CO";
-
-
     }
 }

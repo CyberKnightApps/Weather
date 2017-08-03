@@ -2,6 +2,7 @@ package com.cyberknight.weather.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,8 +15,12 @@ import java.util.ArrayList;
  */
 
 public class BtpDbSource {
-    private SQLiteDatabase database;
+
+    private static final String FILE_NAME = "PrefFile";
+
+    private SQLiteDatabase readDatabase, writeDatabase;
     private BtpDbHelper dbHelper;
+    private Context context;
     private String columns[] = {
             BtpContract.BtpEntry._ID,
             BtpContract.BtpEntry.COLUMN_TIME,
@@ -31,11 +36,13 @@ public class BtpDbSource {
     };
 
     public BtpDbSource(Context context){
+        this.context = context;
         dbHelper = new BtpDbHelper(context);
     }
 
     public void open() throws SQLException {
-        database = dbHelper.getWritableDatabase();
+        writeDatabase = dbHelper.getWritableDatabase();
+        readDatabase = dbHelper.getReadableDatabase();
     }
 
     public void close(){
@@ -56,14 +63,14 @@ public class BtpDbSource {
         values.put(BtpContract.BtpEntry.COLUMN_VOC, record.getVOC());
         values.put(BtpContract.BtpEntry.COLUMN_CO, record.getCO());
 
-        record.setId(database.insert(BtpContract.BtpEntry.TABLE_NAME, null, values));
+        record.setId(writeDatabase.insert(BtpContract.BtpEntry.TABLE_NAME, null, values));
         return record;
     }
 
     public ArrayList<BtpRecord> getAllRecords(){
         ArrayList<BtpRecord> records = new ArrayList<>();
 
-        Cursor cursor = database.query(BtpContract.BtpEntry.TABLE_NAME, columns, null, null, null, null, null);
+        Cursor cursor = writeDatabase.query(BtpContract.BtpEntry.TABLE_NAME, columns, null, null, null, null, null);
         //database.query()
         if(cursor.moveToFirst()){
             do{
@@ -88,5 +95,32 @@ public class BtpDbSource {
         record.setVOC(cursor.getString(cursor.getColumnIndex(columns[9])));
         record.setCO(cursor.getString(cursor.getColumnIndex(columns[10])));
         return record;
+    }
+
+    public ArrayList<BtpRecord> getAllRecordsToUpload(){
+        ArrayList<BtpRecord> records = new ArrayList<>();
+
+        SharedPreferences pref = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        long id = pref.getLong("id",0);
+
+        String query = "SELECT * FROM " + BtpContract.BtpEntry.TABLE_NAME +
+                " WHERE " + BtpContract.BtpEntry._ID + " > " + id +
+                " ORDER BY " + BtpContract.BtpEntry._ID + " ASC";
+
+        Cursor c = readDatabase.rawQuery(query, null);
+
+        if(c.moveToFirst()){
+            do{
+                records.add(cursorToRecord(c));
+            }while(c.moveToNext());
+        }
+
+        if(records.size()>0) {
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putLong("id", records.get(records.size()-1).getId());
+            editor.apply();
+        }
+
+        return records;
     }
 }

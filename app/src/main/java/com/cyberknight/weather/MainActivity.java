@@ -2,7 +2,6 @@ package com.cyberknight.weather;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,8 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.GridView;
 
-import com.cyberknight.weather.Bluetooth.Select;
-import com.cyberknight.weather.bluetooth_connectivity.BluetoothChat;
+import com.cyberknight.weather.bluetooth.Select;
 import com.cyberknight.weather.database.AlarmReceiver;
 import com.cyberknight.weather.database.BtpDbSource;
 
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
         long firstMills = System.currentTimeMillis();
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMills, AlarmManager.INTERVAL_HOUR*5, pendingIntent);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMills, AlarmManager.INTERVAL_HOUR*2, pendingIntent);
     }
 
     @Override

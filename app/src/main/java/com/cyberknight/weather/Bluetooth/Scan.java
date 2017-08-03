@@ -1,4 +1,4 @@
-package com.cyberknight.weather.Bluetooth;
+package com.cyberknight.weather.bluetooth;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;

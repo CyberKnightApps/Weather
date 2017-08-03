@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class BtpRecord {
     private long id;
-    private Date time;
+    private String time;
     private String temperature;
     private String pressure;
     private String humidity;
@@ -21,10 +21,13 @@ public class BtpRecord {
     private String CO2;
     private String VOC;
     private String CO;
+    private Date tmpDate;
+
     public BtpRecord(String to_store){
         to_store = to_store.trim();
         String s[] = to_store.split(";");
-        time = Calendar.getInstance().getTime();
+        tmpDate = Calendar.getInstance().getTime();
+        time = tmpDate.toString();
         temperature = s[0];
         humidity = s[1];
         light = s[2];
@@ -38,25 +41,9 @@ public class BtpRecord {
 
     public BtpRecord(){}
 
-    public BtpRecord(long id, Date time, String temperature, String pressure,
-                     String humidity, String light, String NO2, String NH3, String CO2, String VOC,String CO) {
-        this.id = id;
-        this.time = time;
-        this.temperature = temperature;
-        this.pressure = pressure;
-        this.humidity = humidity;
-        this.light = light;
-        this.NO2 = NO2;
-        this.NH3 = NH3;
-        this.CO2 = CO2;
-        this.VOC = VOC;
-        this.CO = CO;
-
-    }
-
     public String getDate() {
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-        return format1.format(time);
+        return format1.format(tmpDate);
     }
 
     public long getId() {
@@ -67,11 +54,11 @@ public class BtpRecord {
         this.id = id;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

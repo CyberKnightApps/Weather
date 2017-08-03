@@ -1,4 +1,4 @@
-package com.cyberknight.weather.Bluetooth;
+package com.cyberknight.weather.bluetooth;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.cyberknight.weather.MainActivity;
 import com.cyberknight.weather.R;
-import com.cyberknight.weather.bluetooth_connectivity.BluetoothChat;
 
 import java.util.ArrayList;
 import java.util.List;
