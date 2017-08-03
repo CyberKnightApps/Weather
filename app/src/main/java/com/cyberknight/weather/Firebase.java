@@ -26,14 +26,14 @@ public class Firebase {
         mRef = database.getReference().child("Data");
         for(int i = 0;i<btpRecord.size();i++){
             BtpRecord record = btpRecord.get(i);
-            mRef.child(record.getDate()).child(record.getTime()).child("Category 1").setValue(record.getTemperature());
-            mRef.child(record.getDate()).child(record.getTime()).child("Category 2").setValue(record.getHumidity());
-            mRef.child(record.getDate()).child(record.getTime()).child("Category 3").setValue(record.getPressure());
-            mRef.child(record.getDate()).child(record.getTime()).child("Category 4").setValue(record.getCO2());
-            mRef.child(record.getDate()).child(record.getTime()).child("Category 5").setValue(record.getLight());
-            mRef.child(record.getDate()).child(record.getTime()).child("Category 6").setValue(record.getNH3());
-            mRef.child(record.getDate()).child(record.getTime()).child("Category 7").setValue(record.getNO2());
-            mRef.child(record.getDate()).child(record.getTime()).child("Category 8").setValue(record.getVOC());
+            mRef.child(record.getDate()).child(record.getTime().toString()).child("Category 1").setValue(record.getTemperature());
+            mRef.child(record.getDate()).child(record.getTime().toString()).child("Category 2").setValue(record.getHumidity());
+            mRef.child(record.getDate()).child(record.getTime().toString()).child("Category 3").setValue(record.getPressure());
+            mRef.child(record.getDate()).child(record.getTime().toString()).child("Category 4").setValue(record.getCO2());
+            mRef.child(record.getDate()).child(record.getTime().toString()).child("Category 5").setValue(record.getLight());
+            mRef.child(record.getDate()).child(record.getTime().toString()).child("Category 6").setValue(record.getNH3());
+            mRef.child(record.getDate()).child(record.getTime().toString()).child("Category 7").setValue(record.getNO2());
+            mRef.child(record.getDate()).child(record.getTime().toString()).child("Category 8").setValue(record.getVOC());
         }
     }
 

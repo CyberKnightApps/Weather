@@ -1,5 +1,9 @@
 package com.cyberknight.weather.database;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by Parth on 04-03-2017.
  * Project btapp.
@@ -7,7 +11,7 @@ package com.cyberknight.weather.database;
 
 public class BtpRecord {
     private long id;
-    private String time;
+    private Date time;
     private String temperature;
     private String pressure;
     private String humidity;
@@ -16,12 +20,11 @@ public class BtpRecord {
     private String NH3;
     private String CO2;
     private String VOC;
-    private String Date;
     private String CO;
     public BtpRecord(String to_store){
         to_store = to_store.trim();
         String s[] = to_store.split(";");
-        time = "0";
+        time = Calendar.getInstance().getTime();
         temperature = s[0];
         humidity = s[1];
         light = s[2];
@@ -35,7 +38,7 @@ public class BtpRecord {
 
     public BtpRecord(){}
 
-    public BtpRecord(long id, String time, String temperature, String pressure,
+    public BtpRecord(long id, Date time, String temperature, String pressure,
                      String humidity, String light, String NO2, String NH3, String CO2, String VOC,String CO) {
         this.id = id;
         this.time = time;
@@ -52,11 +55,8 @@ public class BtpRecord {
     }
 
     public String getDate() {
-        return Date;
-    }
-
-    public void setDate(String date) {
-        Date = date;
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        return format1.format(time);
     }
 
     public long getId() {
@@ -67,11 +67,11 @@ public class BtpRecord {
         this.id = id;
     }
 
-    public String getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 

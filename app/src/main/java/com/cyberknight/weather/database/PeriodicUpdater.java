@@ -27,7 +27,7 @@ public class PeriodicUpdater extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-       /* if(isNetworkAvailable()){
+       /*if(isNetworkAvailable()){
 
             BtpDbSource database = new BtpDbSource(context);
             ArrayList<BtpRecord> records = database.getAllRecords();
