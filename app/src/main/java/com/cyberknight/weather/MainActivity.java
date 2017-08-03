@@ -3,17 +3,30 @@ package com.cyberknight.weather;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.cyberknight.weather.bluetooth.Select;
 import com.cyberknight.weather.database.AlarmReceiver;
+import com.cyberknight.weather.database.BtpContract;
+import com.cyberknight.weather.database.BtpDbHelper;
 import com.cyberknight.weather.database.BtpDbSource;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -89,10 +102,62 @@ public class MainActivity extends AppCompatActivity {
                 }
                 finish();
                 return true;
+            case R.id.action_save:
+
+                if (Build.VERSION.SDK_INT >= 23) {
+                    //do your check here
+                    ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                    if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                        saveCsv();
+                    }
+                }
+                else
+                    saveCsv();
+
+
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void saveCsv() {
+
+        BtpDbHelper dbhelper = new BtpDbHelper(getApplicationContext());
+        File exportDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        //File exportDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "");
+        if (!exportDir.exists())
+        {
+            exportDir.mkdirs();
+        }
+
+        File file = new File(exportDir, "weather.csv");
+        if(file.exists())
+            file.delete();
+        try
+        {
+            file.createNewFile();
+            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
+            SQLiteDatabase db = dbhelper.getReadableDatabase();
+            Cursor curCSV = db.rawQuery("SELECT * FROM "+BtpContract.BtpEntry.TABLE_NAME,null);
+            csvWrite.writeNext(curCSV.getColumnNames());
+            while(curCSV.moveToNext())
+            {
+                //Which column you want to exprort
+                String arrStr[] ={curCSV.getString(0),curCSV.getString(1), curCSV.getString(2),
+                        curCSV.getString(3),curCSV.getString(4), curCSV.getString(5),curCSV.getString(6),
+                        curCSV.getString(7), curCSV.getString(8),curCSV.getString(9), curCSV.getString(10)};
+                csvWrite.writeNext(arrStr);
+            }
+            csvWrite.close();
+            curCSV.close();
+
+            Toast.makeText(MainActivity.this,"Saved Successfully to Downloads folder",Toast.LENGTH_SHORT).show();
+        }
+        catch(Exception sqlEx)
+        {
+            Log.e("MainActivity", sqlEx.getMessage(), sqlEx);
         }
     }
 }

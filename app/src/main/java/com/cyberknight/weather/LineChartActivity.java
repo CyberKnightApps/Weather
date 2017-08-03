@@ -1,11 +1,13 @@
 package com.cyberknight.weather;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.cyberknight.weather.database.BtpDbSource;
 import com.cyberknight.weather.database.BtpRecord;
@@ -20,8 +22,11 @@ public class LineChartActivity extends AppCompatActivity {
     private ArrayList<Charts>chartsArrayList;
     private ArrayList<Float> values[] = new ArrayList[9];
     private Context mContext;
+
     BtpDbSource bds;
 
+    private int mInterval = 5000; // 5 seconds by default, can be changed later
+    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +38,12 @@ public class LineChartActivity extends AppCompatActivity {
         bds.open();
         for(int i=0; i<9; i++)  values[i] = new ArrayList<>();
         loadOldRecords();
+        updateRecords();
         pushContentsToRecyclerView();
         bds.close();
+
+        mHandler = new Handler();
+        startRepeatingTask();
     }
 
     public void loadOldRecords(){
@@ -86,31 +95,9 @@ public class LineChartActivity extends AppCompatActivity {
 
             }
         }
-        /*for(BtpRecord x: RecordCollector.getBtpRecords()){
-
-            try {
-                values[0].add(Float.parseFloat(x.getTemperature()));
-                values[1].add(Float.parseFloat(x.getPressure()));
-                values[2].add(Float.parseFloat(x.getHumidity()));
-                values[3].add(Float.parseFloat(x.getLight()));
-                values[4].add(Float.parseFloat(x.getNO2()));
-                values[5].add(Float.parseFloat(x.getCO2()));
-                values[6].add(Float.parseFloat(x.getNH3()));
-                values[7].add(Float.parseFloat(x.getVOC()));
-                //values[8].add(Float.parseFloat(x.getCO()));
-                Log.e("LineCharActivity", x.getTemperature() + " " + x.getPressure() + " " + x.getHumidity() + " " + x.getLight() + " -------------------------------------- ");
-
-                bds.addRecord(x);
-
-
-            }
-            catch (Exception e){
-
-            }
-        }*/
         for(int i=0;i<9;i++){
             if(values[i].isEmpty()){
-                values[i].add(5f);
+                values[i].add(-1f);
             }
         }
     }
@@ -118,7 +105,7 @@ public class LineChartActivity extends AppCompatActivity {
     void pushContentsToRecyclerView()
     {
 
-        updateRecords();
+
 
         chartsArrayList=new ArrayList<>();
 
@@ -142,7 +129,39 @@ public class LineChartActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
 
+
+
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopRepeatingTask();
+    }
+
+    Runnable mStatusChecker = new Runnable() {
+        @Override
+        public void run() {
+            try {
+
+
+                updateRecords();
+                //pushContentsToRecyclerView(); //this function can change value of mInterval.
+                adapter.notifyDataSetChanged();
+            } finally {
+                // 100% guarantee that this always happens, even if
+                // your update method throws an exception
+                mHandler.postDelayed(mStatusChecker, mInterval);
+            }
+        }
+    };
+
+    void startRepeatingTask() {
+        mStatusChecker.run();
+    }
+
+    void stopRepeatingTask() {
+        mHandler.removeCallbacks(mStatusChecker);
+    }
 
 }
