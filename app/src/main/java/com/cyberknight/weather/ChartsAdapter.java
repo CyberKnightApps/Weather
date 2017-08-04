@@ -143,14 +143,14 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ChartsView
             set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
             set1.setFormSize(15.f);
 
-            if (Utils.getSDKInt() >= 18) {
+            /*if (Utils.getSDKInt() >= 18) {
                 // fill drawable only supported on api level 18 and above
                 Drawable drawable = ContextCompat.getDrawable(mContext, R.color.green_400);
                 set1.setFillDrawable(drawable);
             }
             else {
                 set1.setFillColor(Color.BLACK);
-            }
+            }*/
 
             ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
             dataSets.add(set1); // add the datasets

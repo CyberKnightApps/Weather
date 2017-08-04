@@ -2,6 +2,7 @@ package com.cyberknight.weather;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 
 import com.cyberknight.weather.database.BtpRecord;
 import com.google.firebase.database.DataSnapshot;
@@ -9,6 +10,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import android.os.*;
 
 import java.util.ArrayList;
 
@@ -22,18 +24,24 @@ public class Firebase {
     private static DatabaseReference mRef;
     private static ProgressDialog progressDialog;
     public static void putAllData(ArrayList<BtpRecord> btpRecord){
+        String name = Build.SERIAL.toString();
         database = FirebaseDatabase.getInstance();
-        mRef = database.getReference().child("Data");
+        mRef = database.getReference().child(name);
         for(int i = 0;i<btpRecord.size();i++){
             BtpRecord record = btpRecord.get(i);
-            mRef.child(record.getDate()).child(record.getTime().toString()).child("Category 1").setValue(record.getTemperature());
-            mRef.child(record.getDate()).child(record.getTime().toString()).child("Category 2").setValue(record.getHumidity());
-            mRef.child(record.getDate()).child(record.getTime().toString()).child("Category 3").setValue(record.getPressure());
-            mRef.child(record.getDate()).child(record.getTime().toString()).child("Category 4").setValue(record.getCO2());
-            mRef.child(record.getDate()).child(record.getTime().toString()).child("Category 5").setValue(record.getLight());
-            mRef.child(record.getDate()).child(record.getTime().toString()).child("Category 6").setValue(record.getNH3());
-            mRef.child(record.getDate()).child(record.getTime().toString()).child("Category 7").setValue(record.getNO2());
-            mRef.child(record.getDate()).child(record.getTime().toString()).child("Category 8").setValue(record.getVOC());
+            StringBuilder str = new StringBuilder();
+            String temp[] = record.getTime().split(" ");
+            str.append(temp[0]+" "+temp[1]+" "+temp[2]);
+            Log.e("Firebase***",str.toString());
+            mRef.child(str.toString()).child(record.getTime()).child("Temprature").setValue(record.getTemperature());
+            mRef.child(str.toString()).child(record.getTime()).child("Humidity").setValue(record.getHumidity());
+            mRef.child(str.toString()).child(record.getTime()).child("Presure").setValue(record.getPressure());
+            mRef.child(str.toString()).child(record.getTime()).child("CO2").setValue(record.getCO2());
+            mRef.child(str.toString()).child(record.getTime()).child("Light").setValue(record.getLight());
+            mRef.child(str.toString()).child(record.getTime()).child("NH3").setValue(record.getNH3());
+            mRef.child(str.toString()).child(record.getTime()).child("NO2").setValue(record.getNO2());
+            mRef.child(str.toString()).child(record.getTime()).child("VOC").setValue(record.getVOC());
+            mRef.child(str.toString()).child(record.getTime()).child("CO").setValue(record.getCO());
         }
     }
 

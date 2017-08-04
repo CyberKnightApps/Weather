@@ -43,7 +43,7 @@ public class BtpRecord {
 
     public String getDate() {
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-        return format1.format(tmpDate);
+        return tmpDate.toString();
     }
 
     public long getId() {

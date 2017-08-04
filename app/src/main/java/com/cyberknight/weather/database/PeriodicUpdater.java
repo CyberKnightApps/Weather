@@ -8,6 +8,8 @@ import android.net.NetworkInfo;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.cyberknight.weather.Firebase;
+
 import java.util.ArrayList;
 
 /**
@@ -29,9 +31,9 @@ public class PeriodicUpdater extends IntentService {
        /*if(isNetworkAvailable()){
 
             BtpDbSource database = new BtpDbSource(context);
-            ArrayList<BtpRecord> records = database.getAllRecords();
+            ArrayList<BtpRecord> records = database.getAllRecordsToUpload();
 
-             //* Upload records to firebase here....
+            Firebase.putAllData(records);
 
         }
         else{

@@ -24,6 +24,7 @@ import com.cyberknight.weather.database.AlarmReceiver;
 import com.cyberknight.weather.database.BtpContract;
 import com.cyberknight.weather.database.BtpDbHelper;
 import com.cyberknight.weather.database.BtpDbSource;
+import com.cyberknight.weather.database.BtpRecord;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -103,7 +104,17 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_save:
+                try {
 
+                    Log.e("Firebase***","Data started to store");
+                    BtpDbSource database = new BtpDbSource(this);
+                    ArrayList<BtpRecord> records = database.getAllRecords();
+                    Firebase.putAllData(records);
+                    Log.e("Firebase***","Data store completed");
+                }
+                catch (Exception e){
+                    Log.e("Firebase***",e.toString());
+                }
                 if (Build.VERSION.SDK_INT >= 23) {
                     //do your check here
                     ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);

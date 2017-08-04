@@ -68,10 +68,12 @@ public class BtpDbSource {
     }
 
     public ArrayList<BtpRecord> getAllRecords(){
+        writeDatabase = dbHelper.getWritableDatabase();
+        readDatabase = dbHelper.getReadableDatabase();
         ArrayList<BtpRecord> records = new ArrayList<>();
 
         Cursor cursor = writeDatabase.query(BtpContract.BtpEntry.TABLE_NAME, columns, null, null, null, null, null);
-        //database.query()
+
         if(cursor.moveToFirst()){
             do{
                 records.add(cursorToRecord(cursor));

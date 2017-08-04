@@ -25,7 +25,7 @@ public class LineChartActivity extends AppCompatActivity {
 
     BtpDbSource bds;
 
-    private int mInterval = 5000; // 5 seconds by default, can be changed later
+    private int mInterval = 30000; // 5 seconds by default, can be changed later
     private Handler mHandler;
 
     @Override
@@ -40,7 +40,7 @@ public class LineChartActivity extends AppCompatActivity {
         loadOldRecords();
         updateRecords();
         pushContentsToRecyclerView();
-        bds.close();
+
 
         mHandler = new Handler();
         startRepeatingTask();
@@ -86,6 +86,7 @@ public class LineChartActivity extends AppCompatActivity {
                 values[7].add(Float.parseFloat(x.getVOC()));
                 values[8].add(Float.parseFloat(x.getCO()));
                 Log.e("LineCharActivity", x.getTemperature() + " " + x.getPressure() + " " + x.getHumidity() + " " + x.getLight() + " -------------------------------------- ");
+
 
                 bds.addRecord(x);
 
@@ -137,6 +138,7 @@ public class LineChartActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         stopRepeatingTask();
+        bds.close();
     }
 
     Runnable mStatusChecker = new Runnable() {
