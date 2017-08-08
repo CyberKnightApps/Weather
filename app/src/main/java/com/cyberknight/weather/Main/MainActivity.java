@@ -1,4 +1,4 @@
-package com.cyberknight.weather;
+package com.cyberknight.weather.Main;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +18,9 @@ import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.cyberknight.weather.Chart.LineChartActivity;
+import com.cyberknight.weather.Firebase.Firebase;
+import com.cyberknight.weather.R;
 import com.cyberknight.weather.bluetooth.Select;
 import com.cyberknight.weather.database.AlarmReceiver;
 import com.cyberknight.weather.database.BtpContract;

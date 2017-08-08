@@ -6,11 +6,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.Nullable;
-import android.util.Log;
-
-import com.cyberknight.weather.Firebase;
-
-import java.util.ArrayList;
 
 /**
  * Created by Parth on 21-07-2017.

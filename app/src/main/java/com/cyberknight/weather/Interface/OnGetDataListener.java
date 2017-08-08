@@ -1,4 +1,4 @@
-package com.cyberknight.weather;
+package com.cyberknight.weather.Interface;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

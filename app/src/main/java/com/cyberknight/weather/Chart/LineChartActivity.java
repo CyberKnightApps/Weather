@@ -1,4 +1,4 @@
-package com.cyberknight.weather;
+package com.cyberknight.weather.Chart;
 
 import android.content.Context;
 import android.os.Handler;
@@ -7,8 +7,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.Toast;
 
+import com.cyberknight.weather.R;
+import com.cyberknight.weather.database.RecordCollector;
 import com.cyberknight.weather.database.BtpDbSource;
 import com.cyberknight.weather.database.BtpRecord;
 

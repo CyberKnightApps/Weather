@@ -4,7 +4,7 @@
     android:id="@+id/activity_line_chart2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cyberknight.weather.LineChartActivity"
+    tools:context="com.cyberknight.weather.Chart.LineChartActivity"
     android:orientation="vertical">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvCharts"

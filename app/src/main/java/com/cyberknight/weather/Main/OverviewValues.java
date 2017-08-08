@@ -1,4 +1,7 @@
-package com.cyberknight.weather;
+package com.cyberknight.weather.Main;
+
+import com.cyberknight.weather.Interface.DrawableIds;
+import com.cyberknight.weather.R;
 
 /**
  * Created by Parth on 30-03-2017.

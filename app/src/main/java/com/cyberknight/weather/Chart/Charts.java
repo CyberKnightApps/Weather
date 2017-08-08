@@ -1,4 +1,4 @@
-package com.cyberknight.weather;
+package com.cyberknight.weather.Chart;
 
 import java.util.ArrayList;
 

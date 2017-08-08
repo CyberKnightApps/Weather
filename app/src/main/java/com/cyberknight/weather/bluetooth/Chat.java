@@ -19,9 +19,9 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.cyberknight.weather.MainActivity;
+import com.cyberknight.weather.Main.MainActivity;
 import com.cyberknight.weather.R;
-import com.cyberknight.weather.RecordCollector;
+import com.cyberknight.weather.database.RecordCollector;
 import com.cyberknight.weather.database.BtpRecord;
 
 import me.aflak.bluetooth.Bluetooth;

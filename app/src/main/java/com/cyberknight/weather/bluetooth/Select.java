@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.cyberknight.weather.MainActivity;
+import com.cyberknight.weather.Main.MainActivity;
 import com.cyberknight.weather.R;
 
 import java.util.ArrayList;

@@ -1,4 +1,6 @@
-package com.cyberknight.weather;
+package com.cyberknight.weather.Interface;
+
+import com.cyberknight.weather.R;
 
 /**
  * Created by Parth on 31-03-2017.

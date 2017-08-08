@@ -1,4 +1,4 @@
-package com.cyberknight.weather;
+package com.cyberknight.weather.Main;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.cyberknight.weather.R;
 
 import java.util.ArrayList;
 
