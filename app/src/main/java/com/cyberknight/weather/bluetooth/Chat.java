@@ -136,12 +136,11 @@ public class Chat extends AppCompatActivity implements Bluetooth.CommunicationCa
 
     @Override
     public void onMessage(String message) {
-        if(message.split(";").length==9){
+        if(message.split(";").length>=13){
             BtpRecord tempRec = new BtpRecord(message);
             RecordCollector.addRecord(tempRec);
             Display(name+": "+message);
         }
-        Display("Nirbhay:) - "+message);
     }
 
     @Override

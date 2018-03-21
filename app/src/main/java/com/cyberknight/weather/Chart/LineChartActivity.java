@@ -22,7 +22,7 @@ public class LineChartActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ChartsAdapter adapter;
     private ArrayList<Charts>chartsArrayList;
-    private ArrayList<Float> values[] = new ArrayList[9];
+    private ArrayList<Float> values[] = new ArrayList[14];
     private Context mContext;
 
     BtpDbSource bds;
@@ -38,7 +38,7 @@ public class LineChartActivity extends AppCompatActivity {
 
         bds = new BtpDbSource(mContext);
         bds.open();
-        for(int i=0; i<9; i++)  values[i] = new ArrayList<>();
+        for(int i=0; i<14; i++)  values[i] = new ArrayList<>();
         loadOldRecords();
         updateRecords();
         pushContentsToRecyclerView();
@@ -63,6 +63,11 @@ public class LineChartActivity extends AppCompatActivity {
                 values[6].add(Float.parseFloat(x.getNH3()));
                 values[7].add(Float.parseFloat(x.getVOC()));
                 values[8].add(Float.parseFloat(x.getCO()));
+                values[9].add(Float.parseFloat(x.getH2()));
+                values[10].add(Float.parseFloat(x.getCH4()));
+                values[11].add(Float.parseFloat(x.getC2H5OH()));
+                values[12].add(Float.parseFloat(x.getC4H10()));
+                values[13].add(Float.parseFloat(x.getC3H8()));
                 Log.e("LineCharActivity", x.getTemperature() + " " + x.getPressure() + " " + x.getHumidity() + " " + x.getLight() + " -------------------------------------- ");
 
             } catch (Exception e) {
@@ -102,6 +107,12 @@ public class LineChartActivity extends AppCompatActivity {
                 values[6].add(Float.parseFloat(x.getNH3()));
                 values[7].add(Float.parseFloat(x.getVOC()));
                 values[8].add(Float.parseFloat(x.getCO()));
+                values[9].add(Float.parseFloat(x.getH2()));
+                values[10].add(Float.parseFloat(x.getCH4()));
+                values[11].add(Float.parseFloat(x.getC2H5OH()));
+                values[12].add(Float.parseFloat(x.getC3H8()));
+                values[13].add(Float.parseFloat(x.getC4H10()));
+
                 Log.e("LineCharActivity", x.getTemperature() + " " + x.getPressure() + " " + x.getHumidity() + " " + x.getLight() + " -------------------------------------- ");
 
 
@@ -113,7 +124,7 @@ public class LineChartActivity extends AppCompatActivity {
 
             }
         }
-        for(int i=0;i<9;i++){
+        for(int i=0;i<14;i++){
             if(values[i].isEmpty()){
                 values[i].add(-1f);
             }
@@ -147,6 +158,11 @@ public class LineChartActivity extends AppCompatActivity {
         chartsArrayList.add(new Charts("NH3","Measure NH3",values[6]));
         chartsArrayList.add(new Charts("VOC","Measure VOC",values[7]));
         chartsArrayList.add(new Charts("CO","Measure CO",values[8]));
+        chartsArrayList.add(new Charts("H2","Measure H2",values[9]));
+        chartsArrayList.add(new Charts("CH4","Measure CH4",values[10]));
+        chartsArrayList.add(new Charts("C2H5OH","Measure C2H5OH",values[11]));
+        chartsArrayList.add(new Charts("C3H8","Measure C3H8",values[12]));
+        chartsArrayList.add(new Charts("C4H10","Measure C4H10",values[13]));
 
         recyclerView = (RecyclerView) findViewById(R.id.rvCharts);
 

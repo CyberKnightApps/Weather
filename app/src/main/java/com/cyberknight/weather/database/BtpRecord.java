@@ -21,22 +21,96 @@ public class BtpRecord {
     private String CO2;
     private String VOC;
     private String CO;
+    private String H2;
+    private String CH4;
+    private String C2H5OH;
+    private String C3H8;
+    private String C4H10;
+
+
     private Date tmpDate;
 
     public BtpRecord(String to_store){
         to_store = to_store.trim();
         String s[] = to_store.split(";");
-        tmpDate = Calendar.getInstance().getTime();
-        time = tmpDate.toString();
-        temperature = s[0];
-        humidity = s[1];
-        light = s[2];
-        pressure = s[3];
-        CO2 = s[4];
-        VOC = s[5];
-        NH3 = s[6];
-        CO = s[7];
-        NO2 = s[8];
+        if (s.length==13) {
+            tmpDate = Calendar.getInstance().getTime();
+            time = tmpDate.toString();
+            CO2 = "0";
+            VOC = "0";
+            CO = s[1];
+            NO2 = s[2];
+            NH3 = s[3];
+            C3H8 =s[4] ;
+            C4H10=s[5];
+            CH4 = s[6];
+            H2 = s[7];
+            C2H5OH = s[8];
+            temperature = s[9];
+            humidity = s[10];
+            light = s[11];
+            pressure = s[12];
+
+        }
+        else{
+            tmpDate = Calendar.getInstance().getTime();
+            time = tmpDate.toString();
+            CO2 = s[0];
+            VOC = s[1];
+            CO = s[2];
+            NO2 = s[3];
+            NH3 = s[4];
+            C3H8 =s[5] ;
+            C4H10=s[6];
+            CH4 = s[7];
+            H2 = s[8];
+            C2H5OH = s[9];
+            temperature = s[10];
+            humidity = s[11];
+            light = s[12];
+            pressure = s[13];
+
+        }
+    }
+
+    public String getH2() {
+        return H2;
+    }
+
+    public void setH2(String h2) {
+        H2 = h2;
+    }
+
+    public String getCH4() {
+        return CH4;
+    }
+
+    public void setCH4(String CH4) {
+        this.CH4 = CH4;
+    }
+
+    public String getC2H5OH() {
+        return C2H5OH;
+    }
+
+    public void setC2H5OH(String c2H5OH) {
+        C2H5OH = c2H5OH;
+    }
+
+    public String getC3H8() {
+        return C3H8;
+    }
+
+    public void setC3H8(String c3H8) {
+        C3H8 = c3H8;
+    }
+
+    public String getC4H10() {
+        return C4H10;
+    }
+
+    public void setC4H10(String c4H10) {
+        C4H10 = c4H10;
     }
 
     public BtpRecord(){}
