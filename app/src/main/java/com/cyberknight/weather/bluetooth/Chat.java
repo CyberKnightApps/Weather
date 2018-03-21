@@ -141,7 +141,7 @@ public class Chat extends AppCompatActivity implements Bluetooth.CommunicationCa
             RecordCollector.addRecord(tempRec);
             Display(name+": "+message);
         }
-        Display("Nirbhay:)");
+        Display("Nirbhay:) - "+message);
     }
 
     @Override

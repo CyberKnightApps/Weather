@@ -81,12 +81,12 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ChartsView
 
         //holder.setPosition(position);
         //Log.d("hh",position+" ");
-        YAxis leftAxis = holder.mChart.getAxisLeft();
+        YAxis leftAxis = holder.mChart.getAxisLeft();/*
         leftAxis.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
         leftAxis.setAxisMaximum(upperLimit[position]);
         leftAxis.setAxisMinimum(lowerLimit[position]);
         leftAxis.addLimitLine(ll1);
-        leftAxis.addLimitLine(ll2);
+        leftAxis.addLimitLine(ll2);*/
         holder.txtTitle1.setText(dataList.get(position).getTitle1());
         holder.txtTitle2.setText(dataList.get(position).getTitle2());
 
@@ -104,7 +104,7 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ChartsView
 
     void setData(LineChart mChart,ArrayList<Float>data1)
     {
-        ArrayList<Entry> values = new ArrayList<Entry>();
+        ArrayList<Entry> values = new ArrayList<>();
         int l=data1.size();
         for(int i=0;i<l;i++)
         {
@@ -116,9 +116,13 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ChartsView
         if (mChart.getData() != null &&
                 mChart.getData().getDataSetCount() > 0) {
             set1 = (LineDataSet)mChart.getData().getDataSetByIndex(0);
-            set1.setValues(values);
+            set1.addEntry(values.get(values.size()-1));
+            //set1.setValues(values);
             mChart.getData().notifyDataChanged();
+            mChart.setVisibleXRangeMaximum(10);
             mChart.notifyDataSetChanged();
+            mChart.invalidate();
+            mChart.moveViewToX(values.size());
         } else {
             // create a dataset and give it a type
             set1 = new LineDataSet(values, "Values");
@@ -159,7 +163,7 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ChartsView
             mChart.setData(data);
         }
 
-        mChart.animateX(500);
+        //mChart.animateX(500);
         //mChart.invalidate();
 
         // get the legend (only possible after setting data)
@@ -196,6 +200,7 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ChartsView
             mChart.setScaleEnabled(true);
             // mChart.setScaleXEnabled(true);
             // mChart.setScaleYEnabled(true);
+            mChart.setHorizontalScrollBarEnabled(true);
             // if disabled, scaling can be done on x- and y-axis separately
             mChart.setPinchZoom(true);
             // set an alternative background color

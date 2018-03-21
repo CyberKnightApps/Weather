@@ -15,6 +15,7 @@ import com.cyberknight.weather.database.BtpRecord;
 
 import java.util.ArrayList;
 import java.util.Queue;
+import java.util.Random;
 
 public class LineChartActivity extends AppCompatActivity {
 
@@ -26,7 +27,7 @@ public class LineChartActivity extends AppCompatActivity {
 
     BtpDbSource bds;
 
-    private int mInterval = 30000; // 5 seconds by default, can be changed later
+    private int mInterval = 1000; // 5 seconds by default, can be changed later
     private Handler mHandler;
 
     @Override
@@ -41,7 +42,6 @@ public class LineChartActivity extends AppCompatActivity {
         loadOldRecords();
         updateRecords();
         pushContentsToRecyclerView();
-
 
         mHandler = new Handler();
         startRepeatingTask();
@@ -69,6 +69,22 @@ public class LineChartActivity extends AppCompatActivity {
 
             }
         }
+
+        /*
+         * Temporary code for checking purposes only. Remove if exists after final app update.
+         * STARTS HERE.
+
+
+        for(int i=0; i<1; i++){
+            Random rnd = new Random();
+            for(int j=0; j<9; j++){
+                values[j].add((float) (rnd.nextFloat()*Math.pow(10,rnd.nextInt(3)+1)));
+            }
+        }
+
+
+         * Temporary code ENDS HERE.
+         */
     }
     public void updateRecords(){
 
@@ -102,13 +118,24 @@ public class LineChartActivity extends AppCompatActivity {
                 values[i].add(-1f);
             }
         }
+
+        /*
+         * Temporary code for checking purposes only. Remove if exists after final app update.
+         * STARTS HERE.
+
+
+        Random rnd = new Random();
+        for(int j=0; j<9; j++) {
+            values[j].add((float) (rnd.nextFloat() * Math.pow(10, rnd.nextInt(3) + 1)));
+        }
+
+        
+         * Temporary code ENDS HERE.
+         */
     }
 
     void pushContentsToRecyclerView()
     {
-
-
-
         chartsArrayList=new ArrayList<>();
 
         chartsArrayList.add(new Charts("Temperature","Measure Temperature",values[0]));

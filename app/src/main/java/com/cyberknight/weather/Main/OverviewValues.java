@@ -32,7 +32,7 @@ public class OverviewValues {
     private void applyColorAndIcon(){
         switch(type){
             case "Temperature":
-                double avgTemp = (maxVal+minVal)/2;
+                double avgTemp = currentVal;
                 if(avgTemp<10){
                     imageId = DrawableIds.COLD;
                     primaryColor = R.color.veryColdPrimary;
@@ -67,7 +67,7 @@ public class OverviewValues {
                 primaryColor = R.color.light_blue_400;
                 primaryDarkColor = R.color.light_blue_500;
                 break;
-            case "Wind Speed":
+            case "Light":
                 double avgSpeed = (maxVal+minVal)/2;
                 imageId = DrawableIds.WIND_SPEED;
                 primaryColor = R.color.teal_400;

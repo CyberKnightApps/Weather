@@ -90,7 +90,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="5dp"
         android:numColumns="2"
-        android:scrollbars="none"
+        android:scrollbars="vertical"
         android:stretchMode="columnWidth"
         android:gravity="center"/>
 </LinearLayout>
