@@ -38,18 +38,18 @@ public class BtpRecord {
             time = tmpDate.toString();
             CO2 = "0";
             VOC = "0";
-            CO = s[1];
-            NO2 = s[2];
-            NH3 = s[3];
-            C3H8 =s[4] ;
-            C4H10=s[5];
-            CH4 = s[6];
-            H2 = s[7];
-            C2H5OH = s[8];
-            temperature = s[9];
-            humidity = s[10];
-            light = s[11];
-            pressure = s[12];
+            CO = s[1].length()==0?"0":s[1];
+            NO2 = s[2].length()==0?"0":s[2];
+            NH3 = s[3].length()==0?"0":s[3];
+            C3H8 =s[4].length()==0?"0":s[4];
+            C4H10=s[5].length()==0?"0":s[5];
+            CH4 = s[6].length()==0?"0":s[6];
+            H2 = s[7].length()==0?"0":s[7];
+            C2H5OH = s[8].length()==0?"0":s[8];
+            temperature = s[9].length()==0?"0":s[9];
+            humidity = s[10].length()==0?"0":s[10];
+            light = s[11].length()==0?"0":s[11];
+            pressure = s[12].length()==0?"0":s[12];
 
         }
         else{
@@ -74,7 +74,7 @@ public class BtpRecord {
     }
 
     public String getH2() {
-        return H2;
+        return H2.length()==0?"0":H2;
     }
 
     public void setH2(String h2) {
@@ -82,7 +82,7 @@ public class BtpRecord {
     }
 
     public String getCH4() {
-        return CH4;
+        return CH4.length()==0?"0":CH4;
     }
 
     public void setCH4(String CH4) {
@@ -90,7 +90,7 @@ public class BtpRecord {
     }
 
     public String getC2H5OH() {
-        return C2H5OH;
+        return C2H5OH.length()==0?"0":C2H5OH;
     }
 
     public void setC2H5OH(String c2H5OH) {
@@ -98,7 +98,7 @@ public class BtpRecord {
     }
 
     public String getC3H8() {
-        return C3H8;
+        return C3H8.length()==0?"0":C3H8;
     }
 
     public void setC3H8(String c3H8) {
@@ -106,7 +106,7 @@ public class BtpRecord {
     }
 
     public String getC4H10() {
-        return C4H10;
+        return C4H10.length()==0?"0":C4H10;
     }
 
     public void setC4H10(String c4H10) {
@@ -137,7 +137,7 @@ public class BtpRecord {
     }
 
     public String getTemperature() {
-        return temperature;
+        return temperature.length()==0?"0":temperature;
     }
 
     public void setTemperature(String temperature) {
@@ -145,7 +145,7 @@ public class BtpRecord {
     }
 
     public String getPressure() {
-        return pressure;
+        return pressure.length()==0?"0":pressure;
     }
 
     public void setPressure(String pressure) {
@@ -153,7 +153,7 @@ public class BtpRecord {
     }
 
     public String getHumidity() {
-        return humidity;
+        return humidity.length()==0?"0":humidity;
     }
 
     public void setHumidity(String humidity) {
@@ -161,7 +161,7 @@ public class BtpRecord {
     }
 
     public String getLight() {
-        return light;
+        return light.length()==0?"0":light;
     }
 
     public void setLight(String light) {
@@ -169,7 +169,7 @@ public class BtpRecord {
     }
 
     public String getNO2() {
-        return NO2;
+        return NO2.length()==0?"0":NO2;
     }
 
     public void setNO2(String NO2) {
@@ -177,7 +177,7 @@ public class BtpRecord {
     }
 
     public String getNH3() {
-        return NH3;
+        return NH3.length()==0?"0":NH3;
     }
 
     public void setNH3(String NH3) {
@@ -185,7 +185,7 @@ public class BtpRecord {
     }
 
     public String getCO2() {
-        return CO2;
+        return CO2.length()==0?"0":CO2;
     }
 
     public void setCO2(String CO2) {
@@ -193,14 +193,14 @@ public class BtpRecord {
     }
 
     public String getVOC() {
-        return VOC;
+        return VOC.length()==0?"0":VOC;
     }
 
     public void setVOC(String VOC) {
         this.VOC = VOC;
     }
 
-    public String getCO(){ return CO;}
+    public String getCO(){ return CO.length()==0?"0":CO;}
 
     public void setCO(String CO){ this.CO = CO; }
 

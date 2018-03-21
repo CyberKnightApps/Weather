@@ -18,12 +18,14 @@ import java.util.Queue;
 import java.util.Random;
 
 public class LineChartActivity extends AppCompatActivity {
+    public static final String TAG = "LineChartActivity";
 
     private RecyclerView recyclerView;
     private ChartsAdapter adapter;
     private ArrayList<Charts>chartsArrayList;
     private ArrayList<Float> values[] = new ArrayList[14];
     private Context mContext;
+    private int lastRec;
 
     BtpDbSource bds;
 
@@ -39,8 +41,8 @@ public class LineChartActivity extends AppCompatActivity {
         bds = new BtpDbSource(mContext);
         bds.open();
         for(int i=0; i<14; i++)  values[i] = new ArrayList<>();
+        lastRec = 0;
         loadOldRecords();
-        updateRecords();
         pushContentsToRecyclerView();
 
         mHandler = new Handler();
@@ -52,8 +54,7 @@ public class LineChartActivity extends AppCompatActivity {
         ArrayList<BtpRecord>oldRecords = bds.getAllRecords();
 
         for(BtpRecord x: oldRecords) {
-
-            try {
+                lastRec++;
                 values[0].add(Float.parseFloat(x.getTemperature()));
                 values[1].add(Float.parseFloat(x.getPressure()));
                 values[2].add(Float.parseFloat(x.getHumidity()));
@@ -69,9 +70,11 @@ public class LineChartActivity extends AppCompatActivity {
                 values[12].add(Float.parseFloat(x.getC4H10()));
                 values[13].add(Float.parseFloat(x.getC3H8()));
                 Log.e("LineCharActivity", x.getTemperature() + " " + x.getPressure() + " " + x.getHumidity() + " " + x.getLight() + " -------------------------------------- ");
+        }
 
-            } catch (Exception e) {
-
+        for(int i=0;i<14;i++){
+            if(values[i].isEmpty()){
+                values[i].add(-1f);
             }
         }
 
@@ -93,8 +96,32 @@ public class LineChartActivity extends AppCompatActivity {
     }
     public void updateRecords(){
 
+        ArrayList<BtpRecord>oldRecords = bds.getAllRecords();
 
-        Queue<BtpRecord> q = RecordCollector.getBtpRecords();
+        Log.d(TAG, "To update record size: "+oldRecords.size());
+        if(oldRecords.size()>lastRec){
+
+            while(oldRecords.size()!=lastRec) {
+                BtpRecord x = oldRecords.get(lastRec);
+                lastRec++;
+                values[0].add(Float.parseFloat(x.getTemperature()));
+                values[1].add(Float.parseFloat(x.getPressure()));
+                values[2].add(Float.parseFloat(x.getHumidity()));
+                values[3].add(Float.parseFloat(x.getLight()));
+                values[4].add(Float.parseFloat(x.getNO2()));
+                values[5].add(Float.parseFloat(x.getCO2()));
+                values[6].add(Float.parseFloat(x.getNH3()));
+                values[7].add(Float.parseFloat(x.getVOC()));
+                values[8].add(Float.parseFloat(x.getCO()));
+                values[9].add(Float.parseFloat(x.getH2()));
+                values[10].add(Float.parseFloat(x.getCH4()));
+                values[11].add(Float.parseFloat(x.getC2H5OH()));
+                values[12].add(Float.parseFloat(x.getC4H10()));
+                values[13].add(Float.parseFloat(x.getC3H8()));
+                Log.e("LineCharActivity", x.getTemperature() + " " + x.getPressure() + " " + x.getHumidity() + " " + x.getLight() + " -------------------------------------- ");
+            }
+        }
+        /*Queue<BtpRecord> q = RecordCollector.getBtpRecords();
         while(!q.isEmpty()){
             BtpRecord x = q.poll();
             try {
@@ -117,13 +144,13 @@ public class LineChartActivity extends AppCompatActivity {
 
 
                 bds.addRecord(x);
-
-
             }
             catch (Exception e){
 
             }
-        }
+        }*/
+
+
         for(int i=0;i<14;i++){
             if(values[i].isEmpty()){
                 values[i].add(-1f);
@@ -140,7 +167,7 @@ public class LineChartActivity extends AppCompatActivity {
             values[j].add((float) (rnd.nextFloat() * Math.pow(10, rnd.nextInt(3) + 1)));
         }
 
-        
+
          * Temporary code ENDS HERE.
          */
     }
