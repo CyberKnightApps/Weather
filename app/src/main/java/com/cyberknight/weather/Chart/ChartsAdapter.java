@@ -110,7 +110,6 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ChartsView
         int l=data1.size();
         for(int i=0;i<l;i++)
         {
-
             values.add(new Entry(i, data1.get(i), mContext.getResources().getDrawable(R.drawable.star)));
         }
         LineDataSet set1;
@@ -118,8 +117,7 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ChartsView
         if (mChart.getData() != null &&
                 mChart.getData().getDataSetCount() > 0) {
             set1 = (LineDataSet)mChart.getData().getDataSetByIndex(0);
-            set1.addEntry(values.get(values.size()-1));
-            //set1.setValues(values);
+            set1.setValues(values);
             mChart.getData().notifyDataChanged();
             mChart.setVisibleXRangeMaximum(10);
             mChart.notifyDataSetChanged();

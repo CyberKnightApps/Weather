@@ -27,7 +27,7 @@ public class LineChartActivity extends AppCompatActivity {
 
     BtpDbSource bds;
 
-    private int mInterval = 1000; // 5 seconds by default, can be changed later
+    private int mInterval = 10000; // 5 seconds by default, can be changed later
     private Handler mHandler;
 
     @Override
@@ -173,9 +173,6 @@ public class LineChartActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(adapter);
-
-
-
     }
 
     @Override

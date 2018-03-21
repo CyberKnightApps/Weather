@@ -204,4 +204,108 @@ public class BtpRecord {
 
     public void setCO(String CO){ this.CO = CO; }
 
+    public String getParam(int i){
+        switch (i){
+            case 0:
+                return getTemperature();
+            case 1:
+                return getPressure();
+            case 2:
+                return getHumidity();
+            case 3:
+                return getLight();
+            case 4:
+                return getNO2();
+            case 5:
+                return getCO2();
+            case 6:
+                return getNH3();
+            case 7:
+                return getVOC();
+            case 8:
+                return getCO();
+            case 9:
+                return getH2();
+            case 10:
+                return getCH4();
+            case 11:
+                return getC2H5OH();
+            case 12:
+                return getC3H8();
+            case 13:
+                return getC4H10();
+            default:
+                return "";
+        }
+    }
+
+    public String getName(int i){
+        switch(i){
+            case 0:
+                return "Temperature";
+            case 1:
+                return "Pressure";
+            case 2:
+                return "Humidity";
+            case 3:
+                return "Light";
+            case 4:
+                return "NO2";
+            case 5:
+                return "CO2";
+            case 6:
+                return "NH3";
+            case 7:
+                return "VOC";
+            case 8:
+                return "CO";
+            case 9:
+                return "H2";
+            case 10:
+                return "CH4";
+            case 11:
+                return "C2H5OH";
+            case 12:
+                return "C3H8";
+            case 13:
+                return "C4H10";
+            default:
+                return "";
+        }
+    }
+
+    public static String getNameOfParam(int i){
+        switch(i) {
+            case 0:
+                return "Temperature";
+            case 1:
+                return "Pressure";
+            case 2:
+                return "Humidity";
+            case 3:
+                return "Light";
+            case 4:
+                return "NO2";
+            case 5:
+                return "CO2";
+            case 6:
+                return "NH3";
+            case 7:
+                return "VOC";
+            case 8:
+                return "CO";
+            case 9:
+                return "H2";
+            case 10:
+                return "CH4";
+            case 11:
+                return "C2H5OH";
+            case 12:
+                return "C3H8";
+            case 13:
+                return "C4H10";
+            default:
+                return "";
+        }
+    }
 }

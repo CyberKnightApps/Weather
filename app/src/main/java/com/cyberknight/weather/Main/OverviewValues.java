@@ -75,8 +75,8 @@ public class OverviewValues {
                 break;
             default:
                 imageId = DrawableIds.NOT_APPLICABLE;
-                primaryColor = R.color.grey_100;
-                primaryDarkColor = R.color.grey_200;
+                primaryColor = R.color.grey_400;
+                primaryDarkColor = R.color.grey_500;
         }
     }
 

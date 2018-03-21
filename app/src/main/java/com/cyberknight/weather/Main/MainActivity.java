@@ -12,11 +12,12 @@ import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.GridView;
 import android.widget.Toast;
 
 import com.cyberknight.weather.Chart.LineChartActivity;
@@ -37,8 +38,8 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MAIN_ACTIVITY";
 
-    private GridView gridView;
-    private GridViewCardAdapter adapter;
+    private RecyclerView gridView;
+    private RecyclerViewAdapter adapter;
     private boolean flag = false;
     private OverviewValues overviewValues[];
     private Handler periodicUpdateHandler;
@@ -56,15 +57,19 @@ public class MainActivity extends AppCompatActivity {
         if (check != null)
             flag = true;
 
-        overviewValues = new OverviewValues[9];
+        overviewValues = new OverviewValues[14];
 
-        gridView = (GridView) findViewById(R.id.activity_main_grid_view);
-        adapter = new GridViewCardAdapter(this, new ArrayList<>(Arrays.asList(overviewValues)));
-        gridView.setAdapter(adapter);
+        gridView = (RecyclerView) findViewById(R.id.activity_main_grid_view);
+        gridView.setLayoutManager(new GridLayoutManager(this, 2));
 
         database = new BtpDbSource(getApplicationContext());
+        populateOverviewValues();
         periodicUpdateHandler = new Handler();
         periodicUpdateHandler.postDelayed(updateRecords, 0);
+
+        adapter = new RecyclerViewAdapter(this, new ArrayList<>(Arrays.asList(overviewValues)));
+        gridView.setAdapter(adapter);
+
         //scheduleAlarm();
     }
 
@@ -72,87 +77,36 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run() {
             populateOverviewValues();
-            adapter = new GridViewCardAdapter(getApplicationContext(), new ArrayList<>(Arrays.asList(overviewValues)));
-            gridView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
 
             periodicUpdateHandler.postDelayed(updateRecords, updateInterval);
         }
     };
 
-    private void populateOverviewValues(){
+    private synchronized void populateOverviewValues(){
         ArrayList<BtpRecord> oldRecords = database.getAllRecords();
 
         if(oldRecords.size()==0){
-            overviewValues[0] = new OverviewValues("Temperature", -25.5, -23.2, -35.4);
-            overviewValues[1] = new OverviewValues("Pressure", -25.5, -23.2, -35.4);
-            overviewValues[2] = new OverviewValues("Humidity", -25.5, -23.2, -35.4);
-            overviewValues[3] = new OverviewValues("Light", -25.5, -23.2, -35.4);
-            overviewValues[4] = new OverviewValues("NO2", -25.5, -23.2, -35.4);
-            overviewValues[5] = new OverviewValues("CO2", -25.5, -23.2, -35.4);
-            overviewValues[6] = new OverviewValues("NH3", -25.5, -23.2, -35.4);
-            overviewValues[7] = new OverviewValues("VOC", -25.5, -23.2, -35.4);
-            overviewValues[8] = new OverviewValues("CO", -25.5, -23.2, -35.4);
+            for(int j=0; j<14; j++) {
+                overviewValues[j] = new OverviewValues(BtpRecord.getNameOfParam(j), -25.5, -23.2, -35.4);
+            }
         }
 
         for(int i=0; i<oldRecords.size(); i++){
             try{
                 BtpRecord rec = oldRecords.get(i);
                 if(i==0) {
-                    overviewValues[0] = new OverviewValues("Temperature", Double.parseDouble(rec.getTemperature()),
-                            Double.parseDouble(rec.getTemperature()), Double.parseDouble(rec.getTemperature()));
-                    overviewValues[1] = new OverviewValues("Pressure", Double.parseDouble(rec.getPressure()),
-                            Double.parseDouble(rec.getPressure()), Double.parseDouble(rec.getPressure()));
-                    overviewValues[2] = new OverviewValues("Humidity", Double.parseDouble(rec.getPressure()),
-                            Double.parseDouble(rec.getPressure()), Double.parseDouble(rec.getPressure()));
-                    overviewValues[3] = new OverviewValues("Light", Double.parseDouble(rec.getPressure()),
-                            Double.parseDouble(rec.getPressure()), Double.parseDouble(rec.getPressure()));
-                    overviewValues[4] = new OverviewValues("NO2", Double.parseDouble(rec.getPressure()),
-                            Double.parseDouble(rec.getPressure()), Double.parseDouble(rec.getPressure()));
-                    overviewValues[5] = new OverviewValues("CO2", Double.parseDouble(rec.getPressure()),
-                            Double.parseDouble(rec.getPressure()), Double.parseDouble(rec.getPressure()));
-                    overviewValues[6] = new OverviewValues("NH3", Double.parseDouble(rec.getPressure()),
-                            Double.parseDouble(rec.getPressure()), Double.parseDouble(rec.getPressure()));
-                    overviewValues[7] = new OverviewValues("VOC", Double.parseDouble(rec.getPressure()),
-                            Double.parseDouble(rec.getPressure()), Double.parseDouble(rec.getPressure()));
-                    overviewValues[8] = new OverviewValues("CO", Double.parseDouble(rec.getPressure()),
-                            Double.parseDouble(rec.getPressure()), Double.parseDouble(rec.getPressure()));
+                    for(int j=0; j<14; j++){
+                        overviewValues[j] = new OverviewValues(rec.getName(j),Double.parseDouble(rec.getParam(j)),
+                                Double.parseDouble(rec.getParam(j)),Double.parseDouble(rec.getParam(j)));
+                    }
                 }
                 else{
-                    double max = (overviewValues[0].getMaxVal()<Double.parseDouble(rec.getTemperature()))?Double.parseDouble(rec.getTemperature()):overviewValues[0].getMaxVal();
-                    double min = (overviewValues[0].getMinVal()>Double.parseDouble(rec.getTemperature()))?Double.parseDouble(rec.getTemperature()):overviewValues[0].getMinVal();
-                    overviewValues[0] = new OverviewValues("Temperature", Double.parseDouble(rec.getTemperature()), min, max);
-
-                    max = (overviewValues[1].getMaxVal()<Double.parseDouble(rec.getTemperature()))?Double.parseDouble(rec.getTemperature()):overviewValues[1].getMaxVal();
-                    min = (overviewValues[1].getMinVal()>Double.parseDouble(rec.getTemperature()))?Double.parseDouble(rec.getTemperature()):overviewValues[1].getMinVal();
-                    overviewValues[1] = new OverviewValues("Pressure", Double.parseDouble(rec.getPressure()), min, max);
-
-                    max = (overviewValues[2].getMaxVal()<Double.parseDouble(rec.getTemperature()))?Double.parseDouble(rec.getTemperature()):overviewValues[2].getMaxVal();
-                    min = (overviewValues[2].getMinVal()>Double.parseDouble(rec.getTemperature()))?Double.parseDouble(rec.getTemperature()):overviewValues[2].getMinVal();
-                    overviewValues[2] = new OverviewValues("Humidity", Double.parseDouble(rec.getPressure()), min, max);
-
-                    max = (overviewValues[3].getMaxVal()<Double.parseDouble(rec.getTemperature()))?Double.parseDouble(rec.getTemperature()):overviewValues[3].getMaxVal();
-                    min = (overviewValues[3].getMinVal()>Double.parseDouble(rec.getTemperature()))?Double.parseDouble(rec.getTemperature()):overviewValues[3].getMinVal();
-                    overviewValues[3] = new OverviewValues("Light", Double.parseDouble(rec.getPressure()), min, max);
-
-                    max = (overviewValues[4].getMaxVal()<Double.parseDouble(rec.getTemperature()))?Double.parseDouble(rec.getTemperature()):overviewValues[4].getMaxVal();
-                    min = (overviewValues[4].getMinVal()>Double.parseDouble(rec.getTemperature()))?Double.parseDouble(rec.getTemperature()):overviewValues[4].getMinVal();
-                    overviewValues[4] = new OverviewValues("NO2", Double.parseDouble(rec.getPressure()), min, max);
-
-                    max = (overviewValues[5].getMaxVal()<Double.parseDouble(rec.getTemperature()))?Double.parseDouble(rec.getTemperature()):overviewValues[5].getMaxVal();
-                    min = (overviewValues[5].getMinVal()>Double.parseDouble(rec.getTemperature()))?Double.parseDouble(rec.getTemperature()):overviewValues[5].getMinVal();
-                    overviewValues[5] = new OverviewValues("CO2", Double.parseDouble(rec.getPressure()), min, max);
-
-                    max = (overviewValues[6].getMaxVal()<Double.parseDouble(rec.getTemperature()))?Double.parseDouble(rec.getTemperature()):overviewValues[6].getMaxVal();
-                    min = (overviewValues[6].getMinVal()>Double.parseDouble(rec.getTemperature()))?Double.parseDouble(rec.getTemperature()):overviewValues[6].getMinVal();
-                    overviewValues[6] = new OverviewValues("NH3", Double.parseDouble(rec.getPressure()), min, max);
-
-                    max = (overviewValues[7].getMaxVal()<Double.parseDouble(rec.getTemperature()))?Double.parseDouble(rec.getTemperature()):overviewValues[7].getMaxVal();
-                    min = (overviewValues[7].getMinVal()>Double.parseDouble(rec.getTemperature()))?Double.parseDouble(rec.getTemperature()):overviewValues[7].getMinVal();
-                    overviewValues[7] = new OverviewValues("VOC", Double.parseDouble(rec.getPressure()), min, max);
-
-                    max = (overviewValues[8].getMaxVal()<Double.parseDouble(rec.getTemperature()))?Double.parseDouble(rec.getTemperature()):overviewValues[8].getMaxVal();
-                    min = (overviewValues[8].getMinVal()>Double.parseDouble(rec.getTemperature()))?Double.parseDouble(rec.getTemperature()):overviewValues[8].getMinVal();
-                    overviewValues[8] = new OverviewValues("CO", Double.parseDouble(rec.getPressure()), min, max);
+                    for(int j=0; j<14; j++){
+                        double max = (overviewValues[j].getMaxVal()<Double.parseDouble(rec.getParam(j)))?Double.parseDouble(rec.getParam(j)):overviewValues[0].getMaxVal();
+                        double min = (overviewValues[j].getMinVal()>Double.parseDouble(rec.getParam(j)))?Double.parseDouble(rec.getParam(j)):overviewValues[0].getMinVal();
+                        overviewValues[j] = new OverviewValues(rec.getName(j), Double.parseDouble(rec.getParam(j)), min, max);
+                    }
                 }
             }
             catch (Exception e){

@@ -22,13 +22,7 @@ public class RecordCollector {
         btpRecords.add(record);
     }
 
-
-
     public static Queue<BtpRecord> getBtpRecords(){
         return btpRecords;
     }
-
-
-
-
 }
