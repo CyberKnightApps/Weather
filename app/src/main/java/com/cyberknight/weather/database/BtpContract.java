@@ -22,7 +22,12 @@ public final class BtpContract {
                     + BtpEntry.COLUMN_NH3 + " REAL, "
                     + BtpEntry.COLUMN_CO2 + " REAL, "
                     + BtpEntry.COLUMN_VOC + " REAL, "
-                    + BtpEntry.COLUMN_CO + " REAL "
+                    + BtpEntry.COLUMN_CO + " REAL, "
+                    + BtpEntry.COLUMN_H2 + " REAL, "
+                    + BtpEntry.COLUMN_CH4 + " REAL, "
+                    + BtpEntry.COLUMN_C2H5OH + " REAL, "
+                    + BtpEntry.COLUMN_C3H8 + " REAL, "
+                    + BtpEntry.COLUMN_C4H10 + " REAL "
                     + ")";
 
     static final String SQL_DELETE_BTP_TABLE = "DROP TABLE IF EXISTS " + BtpEntry.TABLE_NAME;
@@ -41,5 +46,10 @@ public final class BtpContract {
         public static final String COLUMN_CO2 = "CO2";
         public static final String COLUMN_VOC = "VOC";
         public static final String COLUMN_CO = "CO";
+        public static final String COLUMN_H2 = "H2";
+        public static final String COLUMN_CH4 = "CH4";
+        public static final String COLUMN_C2H5OH = "C2H5OH";
+        public static final String COLUMN_C3H8 = "C3H8";
+        public static final String COLUMN_C4H10 = "C4H10";
     }
 }

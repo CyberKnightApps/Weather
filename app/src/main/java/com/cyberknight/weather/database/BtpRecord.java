@@ -55,20 +55,20 @@ public class BtpRecord {
         else{
             tmpDate = Calendar.getInstance().getTime();
             time = tmpDate.toString();
-            CO2 = s[0];
-            VOC = s[1];
-            CO = s[2];
-            NO2 = s[3];
-            NH3 = s[4];
-            C3H8 =s[5] ;
-            C4H10=s[6];
-            CH4 = s[7];
-            H2 = s[8];
-            C2H5OH = s[9];
-            temperature = s[10];
-            humidity = s[11];
-            light = s[12];
-            pressure = s[13];
+            CO2 = s[0].length()==0?"0":s[0];
+            VOC = s[1].length()==0?"0":s[1];
+            CO = s[2].length()==0?"0":s[2];
+            NO2 = s[3].length()==0?"0":s[3];
+            NH3 = s[4].length()==0?"0":s[4];
+            C3H8 = s[5].length()==0?"0":s[5] ;
+            C4H10= s[6].length()==0?"0":s[6];
+            CH4 = s[7].length()==0?"0":s[7];
+            H2 = s[8].length()==0?"0":s[8];
+            C2H5OH = s[9].length()==0?"0":s[9];
+            temperature = s[10].length()==0?"0":s[10];
+            humidity = s[11].length()==0?"0":s[11];
+            light = s[12].length()==0?"0":s[12];
+            pressure = s[13].length()==0?"0":s[13];
 
         }
     }
@@ -203,6 +203,54 @@ public class BtpRecord {
     public String getCO(){ return CO;}
 
     public void setCO(String CO){ this.CO = CO; }
+
+    public void setParam(int i, String str){
+        switch (i){
+            case 0:
+                this.temperature = str;
+                break;
+            case 1:
+                this.pressure = str;
+                break;
+            case 2:
+                this.humidity = str;
+                break;
+            case 3:
+                this.light = str;
+                break;
+            case 4:
+                this.NO2 = str;
+                break;
+            case 5:
+                this.NH3 = str;
+                break;
+            case 6:
+                this.CO2 = str;
+                break;
+            case 7:
+                this.VOC = str;
+                break;
+            case 8:
+                this.CO = str;
+                break;
+            case 9:
+                this.H2 = str;
+                break;
+            case 10:
+                this.CH4 = str;
+                break;
+            case 11:
+                this.C2H5OH = str;
+                break;
+            case 12:
+                this.C3H8 = str;
+                break;
+            case 13:
+                this.C4H10 = str;
+                break;
+            default:
+        }
+    }
 
     public String getParam(int i){
         switch (i){

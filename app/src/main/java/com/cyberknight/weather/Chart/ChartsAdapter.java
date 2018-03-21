@@ -161,6 +161,10 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ChartsView
 
             // set data
             mChart.setData(data);
+            mChart.setVisibleXRangeMaximum(10);
+            mChart.notifyDataSetChanged();
+            mChart.invalidate();
+            mChart.moveViewToX(values.size());
         }
 
         //mChart.animateX(500);
@@ -203,6 +207,8 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ChartsView
             mChart.setHorizontalScrollBarEnabled(true);
             // if disabled, scaling can be done on x- and y-axis separately
             mChart.setPinchZoom(true);
+            mChart.setVisibleXRangeMaximum(10);
+
             // set an alternative background color
             // mChart.setBackgroundColor(Color.GRAY);
             LimitLine llXAxis = new LimitLine(10f, "Index 10");

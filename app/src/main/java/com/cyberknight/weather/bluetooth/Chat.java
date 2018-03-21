@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.cyberknight.weather.Main.MainActivity;
 import com.cyberknight.weather.R;
+import com.cyberknight.weather.database.BtpDbSource;
 import com.cyberknight.weather.database.RecordCollector;
 import com.cyberknight.weather.database.BtpRecord;
 
@@ -34,6 +35,7 @@ public class Chat extends AppCompatActivity implements Bluetooth.CommunicationCa
     private TextView text;
     private ScrollView scrollView;
     private boolean registered=false;
+    private BtpDbSource database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class Chat extends AppCompatActivity implements Bluetooth.CommunicationCa
         send = (Button)findViewById(R.id.send);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
 
+        database = new BtpDbSource(getApplicationContext());
         text.setMovementMethod(new ScrollingMovementMethod());
         send.setEnabled(false);
 
@@ -138,6 +141,7 @@ public class Chat extends AppCompatActivity implements Bluetooth.CommunicationCa
     public void onMessage(String message) {
         if(message.split(";").length>=13){
             BtpRecord tempRec = new BtpRecord(message);
+            database.addRecord(tempRec);
             RecordCollector.addRecord(tempRec);
             Display(name+": "+message);
         }

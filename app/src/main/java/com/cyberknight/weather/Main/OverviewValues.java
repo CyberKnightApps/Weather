@@ -21,10 +21,10 @@ public class OverviewValues {
         type = "";
     }
 
-    public OverviewValues(String type, double currentVal, double minVal, double maxVal) {
-        this.currentVal = currentVal;
-        this.minVal = minVal;
-        this.maxVal = maxVal;
+    public OverviewValues(String type, String curr, String max, String min) {
+        this.currentVal = curr.length()==0?0:Double.parseDouble(curr);
+        this.minVal = min.length()==0?0:Double.parseDouble(min);
+        this.maxVal = max.length()==0?0:Double.parseDouble(max);
         this.type = type;
         applyColorAndIcon();
     }
@@ -69,6 +69,56 @@ public class OverviewValues {
                 break;
             case "Light":
                 double avgSpeed = (maxVal+minVal)/2;
+                imageId = DrawableIds.WIND_SPEED;
+                primaryColor = R.color.warmPrimary;
+                primaryDarkColor = R.color.warmPrimaryDark;
+                break;
+            case "NO2":
+                imageId = DrawableIds.WIND_SPEED;
+                primaryColor = R.color.teal_400;
+                primaryDarkColor = R.color.teal_500;
+                break;
+            case "NH3":
+                imageId = DrawableIds.WIND_SPEED;
+                primaryColor = R.color.teal_400;
+                primaryDarkColor = R.color.teal_500;
+                break;
+            case "CO2":
+                imageId = DrawableIds.WIND_SPEED;
+                primaryColor = R.color.normalPrimary;
+                primaryDarkColor = R.color.normalPrimaryDark;
+                break;
+            case "VOC":
+                imageId = DrawableIds.WIND_SPEED;
+                primaryColor = R.color.light_blue_400;
+                primaryDarkColor = R.color.light_blue_500;
+                break;
+            case "CO":
+                imageId = DrawableIds.WIND_SPEED;
+                primaryColor = R.color.hotPrimary;
+                primaryDarkColor = R.color.hotPrimaryDark;
+                break;
+            case "H2":
+                imageId = DrawableIds.WIND_SPEED;
+                primaryColor = R.color.normalPrimary;
+                primaryDarkColor = R.color.normalPrimaryDark;
+                break;
+            case "CH4":
+                imageId = DrawableIds.WIND_SPEED;
+                primaryColor = R.color.teal_400;
+                primaryDarkColor = R.color.teal_500;
+                break;
+            case "C2H5OH":
+                imageId = DrawableIds.WIND_SPEED;
+                primaryColor = R.color.veryColdPrimary;
+                primaryDarkColor = R.color.veryColdPrimaryDark;
+                break;
+            case "C3H8":
+                imageId = DrawableIds.WIND_SPEED;
+                primaryColor = R.color.light_blue_400;
+                primaryDarkColor = R.color.light_blue_500;
+                break;
+            case "C4H10":
                 imageId = DrawableIds.WIND_SPEED;
                 primaryColor = R.color.teal_400;
                 primaryDarkColor = R.color.teal_500;

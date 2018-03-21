@@ -32,12 +32,18 @@ public class BtpDbSource {
             BtpContract.BtpEntry.COLUMN_NH3,
             BtpContract.BtpEntry.COLUMN_CO2,
             BtpContract.BtpEntry.COLUMN_VOC,
-            BtpContract.BtpEntry.COLUMN_CO
+            BtpContract.BtpEntry.COLUMN_CO,
+            BtpContract.BtpEntry.COLUMN_H2,
+            BtpContract.BtpEntry.COLUMN_CH4,
+            BtpContract.BtpEntry.COLUMN_C2H5OH,
+            BtpContract.BtpEntry.COLUMN_C3H8,
+            BtpContract.BtpEntry.COLUMN_C4H10
     };
 
     public BtpDbSource(Context context){
         this.context = context;
         dbHelper = new BtpDbHelper(context);
+        open();
     }
 
     public void open() throws SQLException {
@@ -53,7 +59,11 @@ public class BtpDbSource {
         ContentValues values = new ContentValues();
 
         values.put(BtpContract.BtpEntry.COLUMN_TIME, record.getTime());
-        values.put(BtpContract.BtpEntry.COLUMN_TEMPERATURE, record.getTemperature());
+
+        for(int i=0; i<14; i++) {
+            values.put(columns[i+2], record.getParam(i));
+        }
+        /*
         values.put(BtpContract.BtpEntry.COLUMN_PRESSURE, record.getPressure());
         values.put(BtpContract.BtpEntry.COLUMN_HUMIDITY, record.getHumidity());
         values.put(BtpContract.BtpEntry.COLUMN_LIGHT, record.getLight());
@@ -62,7 +72,7 @@ public class BtpDbSource {
         values.put(BtpContract.BtpEntry.COLUMN_CO2, record.getCO2());
         values.put(BtpContract.BtpEntry.COLUMN_VOC, record.getVOC());
         values.put(BtpContract.BtpEntry.COLUMN_CO, record.getCO());
-
+        */
         record.setId(writeDatabase.insert(BtpContract.BtpEntry.TABLE_NAME, null, values));
         return record;
     }
@@ -85,8 +95,13 @@ public class BtpDbSource {
 
     private BtpRecord cursorToRecord(Cursor cursor){
         BtpRecord record = new BtpRecord();
+
         record.setId(cursor.getLong(cursor.getColumnIndex(columns[0])));
         record.setTime(cursor.getString(cursor.getColumnIndex(columns[1])));
+
+        for(int i=0; i<14; i++){
+            record.setParam(i, cursor.getString(cursor.getColumnIndex(columns[i+2])));
+        }/*
         record.setTemperature(cursor.getString(cursor.getColumnIndex(columns[2])));
         record.setPressure(cursor.getString(cursor.getColumnIndex(columns[3])));
         record.setHumidity(cursor.getString(cursor.getColumnIndex(columns[4])));
@@ -95,7 +110,7 @@ public class BtpDbSource {
         record.setNH3(cursor.getString(cursor.getColumnIndex(columns[7])));
         record.setCO2(cursor.getString(cursor.getColumnIndex(columns[8])));
         record.setVOC(cursor.getString(cursor.getColumnIndex(columns[9])));
-        record.setCO(cursor.getString(cursor.getColumnIndex(columns[10])));
+        record.setCO(cursor.getString(cursor.getColumnIndex(columns[10])));*/
         return record;
     }
 

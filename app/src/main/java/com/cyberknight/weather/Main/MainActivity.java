@@ -41,11 +41,11 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView gridView;
     private RecyclerViewAdapter adapter;
     private boolean flag = false;
-    private OverviewValues overviewValues[];
+    private ArrayList<OverviewValues> overviewValList;
     private Handler periodicUpdateHandler;
     private BtpDbSource database;
 
-    private final int updateInterval = 10000;
+    private final int updateInterval = 20000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,10 @@ public class MainActivity extends AppCompatActivity {
         if (check != null)
             flag = true;
 
-        overviewValues = new OverviewValues[14];
+        overviewValList = new ArrayList<>(14);
+        for(int j=0; j<14; j++) {
+            overviewValList.add(new OverviewValues(BtpRecord.getNameOfParam(j), "-00.0", "-00.0", "-0.00"));
+        }
 
         gridView = (RecyclerView) findViewById(R.id.activity_main_grid_view);
         gridView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -67,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         periodicUpdateHandler = new Handler();
         periodicUpdateHandler.postDelayed(updateRecords, 0);
 
-        adapter = new RecyclerViewAdapter(this, new ArrayList<>(Arrays.asList(overviewValues)));
+        adapter = new RecyclerViewAdapter(this, overviewValList);
         gridView.setAdapter(adapter);
 
         //scheduleAlarm();
@@ -86,32 +89,24 @@ public class MainActivity extends AppCompatActivity {
     private synchronized void populateOverviewValues(){
         ArrayList<BtpRecord> oldRecords = database.getAllRecords();
 
-        if(oldRecords.size()==0){
-            for(int j=0; j<14; j++) {
-                overviewValues[j] = new OverviewValues(BtpRecord.getNameOfParam(j), -25.5, -23.2, -35.4);
-            }
-        }
+        Log.d(TAG, "Records size : "+oldRecords.size());
 
         for(int i=0; i<oldRecords.size(); i++){
-            try{
-                BtpRecord rec = oldRecords.get(i);
-                if(i==0) {
-                    for(int j=0; j<14; j++){
-                        overviewValues[j] = new OverviewValues(rec.getName(j),Double.parseDouble(rec.getParam(j)),
-                                Double.parseDouble(rec.getParam(j)),Double.parseDouble(rec.getParam(j)));
-                    }
-                }
-                else{
-                    for(int j=0; j<14; j++){
-                        double max = (overviewValues[j].getMaxVal()<Double.parseDouble(rec.getParam(j)))?Double.parseDouble(rec.getParam(j)):overviewValues[0].getMaxVal();
-                        double min = (overviewValues[j].getMinVal()>Double.parseDouble(rec.getParam(j)))?Double.parseDouble(rec.getParam(j)):overviewValues[0].getMinVal();
-                        overviewValues[j] = new OverviewValues(rec.getName(j), Double.parseDouble(rec.getParam(j)), min, max);
-                    }
+            BtpRecord rec = oldRecords.get(i);
+            if(i==0) {
+                for(int j=0; j<14; j++){
+                    overviewValList.set(j,new OverviewValues(rec.getName(j), rec.getParam(j), rec.getParam(j), rec.getParam(j)));
                 }
             }
-            catch (Exception e){
-                Log.e(TAG, e.getLocalizedMessage()+"--"+e.getMessage());
+            else{
+                for(int j=0; j<14; j++){
+                    double currval = rec.getParam(j).length()==0?0:Double.parseDouble(rec.getParam(j));
+                    double max = (overviewValList.get(j).getMaxVal()<currval)?currval:overviewValList.get(j).getMaxVal();
+                    double min = (overviewValList.get(j).getMinVal()>currval)?currval:overviewValList.get(j).getMinVal();
+                    overviewValList.set(j,new OverviewValues(rec.getName(j), rec.getParam(j), String.valueOf(min), String.valueOf(max)));
+                }
             }
+
         }
     }
 
