@@ -50,7 +50,6 @@ public class BtpRecord {
             humidity = s[10].length()==0?"0":s[10];
             light = s[11].length()==0?"0":s[11];
             pressure = s[12].length()==0?"0":s[12];
-
         }
         else{
             tmpDate = Calendar.getInstance().getTime();
@@ -265,9 +264,9 @@ public class BtpRecord {
             case 4:
                 return getNO2();
             case 5:
-                return getCO2();
-            case 6:
                 return getNH3();
+            case 6:
+                return getCO2();
             case 7:
                 return getVOC();
             case 8:
@@ -300,9 +299,9 @@ public class BtpRecord {
             case 4:
                 return "NO2";
             case 5:
-                return "CO2";
-            case 6:
                 return "NH3";
+            case 6:
+                return "CO2";
             case 7:
                 return "VOC";
             case 8:
@@ -335,9 +334,9 @@ public class BtpRecord {
             case 4:
                 return "NO2";
             case 5:
-                return "CO2";
-            case 6:
                 return "NH3";
+            case 6:
+                return "CO2";
             case 7:
                 return "VOC";
             case 8:
