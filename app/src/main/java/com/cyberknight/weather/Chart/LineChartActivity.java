@@ -77,23 +77,8 @@ public class LineChartActivity extends AppCompatActivity {
                 values[i].add(-1f);
             }
         }
-
-        /*
-         * Temporary code for checking purposes only. Remove if exists after final app update.
-         * STARTS HERE.
-
-
-        for(int i=0; i<1; i++){
-            Random rnd = new Random();
-            for(int j=0; j<9; j++){
-                values[j].add((float) (rnd.nextFloat()*Math.pow(10,rnd.nextInt(3)+1)));
-            }
-        }
-
-
-         * Temporary code ENDS HERE.
-         */
     }
+    
     public void updateRecords(){
 
         ArrayList<BtpRecord>oldRecords = bds.getAllRecords();
@@ -121,55 +106,6 @@ public class LineChartActivity extends AppCompatActivity {
                 Log.e("LineCharActivity", x.getTemperature() + " " + x.getPressure() + " " + x.getHumidity() + " " + x.getLight() + " -------------------------------------- ");
             }
         }
-        /*Queue<BtpRecord> q = RecordCollector.getBtpRecords();
-        while(!q.isEmpty()){
-            BtpRecord x = q.poll();
-            try {
-                values[0].add(Float.parseFloat(x.getTemperature()));
-                values[1].add(Float.parseFloat(x.getPressure()));
-                values[2].add(Float.parseFloat(x.getHumidity()));
-                values[3].add(Float.parseFloat(x.getLight()));
-                values[4].add(Float.parseFloat(x.getNO2()));
-                values[5].add(Float.parseFloat(x.getCO2()));
-                values[6].add(Float.parseFloat(x.getNH3()));
-                values[7].add(Float.parseFloat(x.getVOC()));
-                values[8].add(Float.parseFloat(x.getCO()));
-                values[9].add(Float.parseFloat(x.getH2()));
-                values[10].add(Float.parseFloat(x.getCH4()));
-                values[11].add(Float.parseFloat(x.getC2H5OH()));
-                values[12].add(Float.parseFloat(x.getC3H8()));
-                values[13].add(Float.parseFloat(x.getC4H10()));
-
-                Log.e("LineCharActivity", x.getTemperature() + " " + x.getPressure() + " " + x.getHumidity() + " " + x.getLight() + " -------------------------------------- ");
-
-
-                bds.addRecord(x);
-            }
-            catch (Exception e){
-
-            }
-        }*/
-
-
-        for(int i=0;i<14;i++){
-            if(values[i].isEmpty()){
-                values[i].add(-1f);
-            }
-        }
-
-        /*
-         * Temporary code for checking purposes only. Remove if exists after final app update.
-         * STARTS HERE.
-
-
-        Random rnd = new Random();
-        for(int j=0; j<9; j++) {
-            values[j].add((float) (rnd.nextFloat() * Math.pow(10, rnd.nextInt(3) + 1)));
-        }
-
-
-         * Temporary code ENDS HERE.
-         */
     }
 
     void pushContentsToRecyclerView()
@@ -213,14 +149,10 @@ public class LineChartActivity extends AppCompatActivity {
         @Override
         public void run() {
             try {
-
-
                 updateRecords();
                 //pushContentsToRecyclerView(); //this function can change value of mInterval.
                 adapter.notifyDataSetChanged();
             } finally {
-                // 100% guarantee that this always happens, even if
-                // your update method throws an exception
                 mHandler.postDelayed(mStatusChecker, mInterval);
             }
         }
